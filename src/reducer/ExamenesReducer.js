@@ -1,16 +1,17 @@
-import { actions, MenuOptions } from "../actions/types";
+import { actions } from "../actions/types";
 
 const initialState = {
-  menuSelected: MenuOptions.ExamenesFinales,
+  examenes: [],
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case actions.MenuSwitch:
+    case actions.setExamenesUsuario:
       return {
         ...state,
-        menuSelected: action.payload,
+        examenes: action.payload,
       };
+    
 
     default:
       return state;

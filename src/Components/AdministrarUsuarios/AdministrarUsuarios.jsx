@@ -1,23 +1,21 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import HeaderAdministrarUsuarios from "./HeaderAdministrarUsuarios";
 import DataAdministrarUsuarios from "./DataAdministrarUsuarios";
 import ToolBarMaterias from "./ToolBarAdministrarUsuarios";
 import "../../Css/Materias.css";
 
-export default function Materias() {
+export default function AdministrarUsuarios() {
+  const administrarUsuarios = useSelector((state) => state.administrarUsuarios);
+
   return (
     <div className="Materias">
       <ToolBarMaterias />
       <HeaderAdministrarUsuarios />
       <div className="OverflowTable">
-        <DataAdministrarUsuarios />
-        <DataAdministrarUsuarios />
-        <DataAdministrarUsuarios />
-        <DataAdministrarUsuarios />
-        <DataAdministrarUsuarios />
-        <DataAdministrarUsuarios />
-        <DataAdministrarUsuarios />
-        <DataAdministrarUsuarios />
+        {administrarUsuarios.usuarios.map((usuario, index) => {
+          return <DataAdministrarUsuarios key={index} usuario={usuario} />;
+        })}
       </div>
     </div>
   );

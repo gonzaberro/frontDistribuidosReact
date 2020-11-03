@@ -2,23 +2,23 @@ import React from "react";
 import "../../../Css/RightContainer.css";
 import { useSelector } from "react-redux";
 import { MenuOptions } from "../../../actions/types";
-import Materias from "../../Materias/Materias";
-import ExamenesFinales from "../../ExamenesFinales/ExamenesFinales";
-import InformacionPersonal from "../../InformacionPersonal/InformacionPersonal";
-import AdministrarUsuarios from "../../AdministrarUsuarios/AdministrarUsuarios";
+import PageMaterias from "../../Materias/PageMaterias";
+import PageExamenesFinales from "../../ExamenesFinales/PageExamenesFinales";
+import PageInformacionPersonal from "../../InformacionPersonal/PageInformacionPersonal";
+import PageAdministrarUsuarios from "../../AdministrarUsuarios/PageAdministrarUsuarios";
 export default function RightContainer() {
   const menuSelected = useSelector((state) => state.menuSelected.menuSelected);
 
   const SwitchMenu = () => {
     switch (menuSelected) {
       case MenuOptions.Materias:
-        return <Materias />;
+        return <PageMaterias />;
       case MenuOptions.ExamenesFinales:
-        return <ExamenesFinales />;
+        return <PageExamenesFinales />;
       case MenuOptions.InformacionPersonal:
-        return <InformacionPersonal />;
+        return <PageInformacionPersonal />;
       case MenuOptions.AdministrarUsuarios:
-        return <AdministrarUsuarios />;
+        return <PageAdministrarUsuarios />;
       default:
         return <div></div>;
     }

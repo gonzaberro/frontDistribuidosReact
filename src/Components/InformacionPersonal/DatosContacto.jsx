@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, TextField } from "@material-ui/core";
 import "../../Css/InformacionPersonal.css";
 
-export default function DatosContacto() {
+export default function DatosContacto(props) {
   return (
     <Grid container className="ColumInformacionPersonal">
       <Grid item md={12}>
@@ -13,23 +13,26 @@ export default function DatosContacto() {
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Teléfono"
+            placeholder="Teléfono"
             variant="outlined"
             className="InputsDato"
+            value={props.usuario.telefono}
           />
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Email"
+            placeholder="Email"
             variant="outlined"
             className="InputsDato"
+            value={props.usuario.email}
           />
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Dirección"
+            placeholder="Dirección"
             variant="outlined"
             className="InputsDato"
+            value={props.usuario.direccion?.calle}
           />
         </form>
       </Grid>

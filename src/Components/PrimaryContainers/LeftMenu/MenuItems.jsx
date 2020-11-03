@@ -14,6 +14,7 @@ import { MenuOptions } from "../../../actions/types";
 
 export default function MenuItems() {
   const disptach = useDispatch();
+  const rolUsuario = useSelector((state) => state.informacionPersonal.idRol);
   const menuSelected = useSelector((state) => state.menuSelected.menuSelected);
   const switchMenu = (menuSelected) => {
     disptach(selectMenu(menuSelected));
@@ -43,39 +44,45 @@ export default function MenuItems() {
         <FontAwesomeIcon className="Icon" icon={faBook} />
         <label className="LabelIcon">Materias</label>
       </div>
-      <div
-        className={
-          menuSelected === MenuOptions.ExamenesFinales
-            ? "MenuItems-Selected MenuItems"
-            : "MenuItems"
-        }
-        onClick={() => switchMenu(MenuOptions.ExamenesFinales)}
-      >
-        <FontAwesomeIcon className="Icon" icon={faFileAlt} />
-        <label className="LabelIcon">Exámenes Finales</label>
-      </div>
-      <div
-        className={
-          menuSelected === MenuOptions.AdministrarUsuarios
-            ? "MenuItems-Selected MenuItems"
-            : "MenuItems"
-        }
-        onClick={() => switchMenu(MenuOptions.AdministrarUsuarios)}
-      >
-        <FontAwesomeIcon className="Icon" icon={faUserPlus} />
-        <label className="LabelIcon">Administrar Usuarios</label>
-      </div>
-      <div
-        className={
-          menuSelected === MenuOptions.CargarNotas
-            ? "MenuItems-Selected MenuItems"
-            : "MenuItems"
-        }
-        onClick={() => switchMenu(MenuOptions.CargarNotas)}
-      >
-        <FontAwesomeIcon className="Icon" icon={faMarker} />
-        <label className="LabelIcon">Cargar Notas</label>
-      </div>
+      {rolUsuario !== 2 && (
+        <div
+          className={
+            menuSelected === MenuOptions.ExamenesFinales
+              ? "MenuItems-Selected MenuItems"
+              : "MenuItems"
+          }
+          onClick={() => switchMenu(MenuOptions.ExamenesFinales)}
+        >
+          <FontAwesomeIcon className="Icon" icon={faFileAlt} />
+          <label className="LabelIcon">Exámenes Finales</label>
+        </div>
+      )}
+      {rolUsuario === 1 && (
+        <div
+          className={
+            menuSelected === MenuOptions.AdministrarUsuarios
+              ? "MenuItems-Selected MenuItems"
+              : "MenuItems"
+          }
+          onClick={() => switchMenu(MenuOptions.AdministrarUsuarios)}
+        >
+          <FontAwesomeIcon className="Icon" icon={faUserPlus} />
+          <label className="LabelIcon">Administrar Usuarios</label>
+        </div>
+      )}
+      {rolUsuario === 2 && (
+        <div
+          className={
+            menuSelected === MenuOptions.CargarNotas
+              ? "MenuItems-Selected MenuItems"
+              : "MenuItems"
+          }
+          onClick={() => switchMenu(MenuOptions.CargarNotas)}
+        >
+          <FontAwesomeIcon className="Icon" icon={faMarker} />
+          <label className="LabelIcon">Cargar Notas</label>
+        </div>
+      )}
     </div>
   );
 }

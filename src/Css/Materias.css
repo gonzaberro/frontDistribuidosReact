@@ -46,3 +46,7 @@
   float: left;
   margin-left: 1.5rem;
 }
+.textInscriptoMateria {
+  font-weight: bold;
+  color: #3fce36;
+}

@@ -8,26 +8,19 @@ export default function HeaderExamenesFinales() {
       <Grid item xs={12} sm={3} className="HeaderGrid">
         Nombre de Materia
       </Grid>
-      <Grid item xs={12} sm={1} className="HeaderGrid">
-        Comisión
-      </Grid>
-      <Grid item xs={12} sm={2} className="HeaderGrid">
+
+      <Grid item xs={12} sm={3} className="HeaderGrid">
         Docente
       </Grid>
 
-      <Grid item xs={12} sm={1} className="HeaderGrid">
-        Llamado
-      </Grid>
-      <Grid item xs={12} sm={1} className="HeaderGrid">
+      <Grid item xs={12} sm={2} className="HeaderGrid">
         Fecha
       </Grid>
       <Grid item xs={12} sm={1} className="HeaderGrid">
         Hora
       </Grid>
-      <Grid item xs={12} sm={1} className="HeaderGrid">
-        Resultado
-      </Grid>
-      <Grid item xs={12} sm={2} className="HeaderGrid">
+
+      <Grid item xs={12} sm={3} className="HeaderGrid">
         Acciones
       </Grid>
     </Grid>
