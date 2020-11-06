@@ -1,7 +1,7 @@
 import { actions, MenuOptions } from "../actions/types";
 
 const initialState = {
-  menuSelected: MenuOptions.CargarNotas,
+  menuSelected: MenuOptions.AdministrarUsuarios,
 };
 
 export default function (state = initialState, action) {

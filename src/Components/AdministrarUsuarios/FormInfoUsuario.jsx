@@ -11,6 +11,7 @@ import { apiCalls } from "../../api/apiCalls";
 import { setUsuarios } from "../../actions/AdministrarUsuariosActions";
 import { setModal } from "../../actions/ModalActions";
 import { useSnackbar } from "notistack";
+import FotoUpload from "./FotoUpload";
 
 export default function FormInfoUsuario(props) {
   const { enqueueSnackbar } = useSnackbar();
@@ -28,6 +29,7 @@ export default function FormInfoUsuario(props) {
   const [localidad, setLocalidad] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("1234");
+  const [base64Image, setBase64Image] = useState("");
 
   const administrarUsuarios = useSelector((state) => state.administrarUsuarios);
 
@@ -43,6 +45,7 @@ export default function FormInfoUsuario(props) {
       setPais(usuario.direccion?.pais);
       setLocalidad(usuario.direccion?.localidad);
       setDireccion(usuario.direccion?.calle);
+      setBase64Image(usuario.imagen);
 
       if (usuario.rol?.id === 1) {
         setAdministrador(true);
@@ -88,7 +91,7 @@ export default function FormInfoUsuario(props) {
         localidad: localidad,
         calle: direccion,
       },
-      imagen: "string",
+      imagen: base64Image,
       primerIngreso: true,
       idRol: (estudiante && 3) || (maestro && 2) || (administrador && 1),
     };
@@ -211,41 +214,47 @@ export default function FormInfoUsuario(props) {
               value={documento}
               onChange={(event) => setDocumento(event.target.value)}
             />
-            <label>Rol del Usuario</label>
-            <Grid container>
-              <Grid item md={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={administrador}
-                      onChange={() => handleChange(1)}
-                      name="gilad"
-                    />
-                  }
-                  label="Administrador"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={maestro}
-                      onChange={() => handleChange(2)}
-                      name="gilad"
-                    />
-                  }
-                  label="Maestro"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={estudiante}
-                      onChange={() => handleChange(3)}
-                      name="gilad"
-                    />
-                  }
-                  label="Estudiante"
-                />
+            <FotoUpload
+              setBase64Image={setBase64Image}
+              base64Image={base64Image}
+            />
+            <div style={{ marginLeft: "10px" }}>
+              <label style={{ marginTop: "10px" }}>Rol del Usuario</label>
+              <Grid container>
+                <Grid item md={12}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={administrador}
+                        onChange={() => handleChange(1)}
+                        name="gilad"
+                      />
+                    }
+                    label="Administrador"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={maestro}
+                        onChange={() => handleChange(2)}
+                        name="gilad"
+                      />
+                    }
+                    label="Docente"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={estudiante}
+                        onChange={() => handleChange(3)}
+                        name="gilad"
+                      />
+                    }
+                    label="Estudiante"
+                  />
+                </Grid>
               </Grid>
-            </Grid>
+            </div>
             <Button
               variant="contained"
               className="ButtonNuevoUsuario"

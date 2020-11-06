@@ -82,9 +82,9 @@ function getMaterias() {
   
   return api.get("/materias/all");
 }
-function setCalificacionMateria(idMateriaUsuario,calificacion) {
+function setCalificacionMateria(idMateriaUsuario,calificacion,notaTp) {
   
-  return api.put("/usuarios-materias/calificaciones?calificacion="+calificacion+"&idUsuarioMateria="+idMateriaUsuario);
+  return api.put("/usuarios-materias/calificaciones?calificacionExamen="+calificacion+"&calificacionTps="+notaTp+"&idUsuarioMateria="+idMateriaUsuario);
 }
 function setCalificacionExamen(idUsuarioExamenFinal,calificacion) {
   

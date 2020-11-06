@@ -7,20 +7,20 @@ export default function HorariosMateria() {
     (state) => state.materiasReducer.materiaSeleccionada
   );
   return (
-    <Grid container className="ContainerDataGrid">
+    <Grid container className="containerHeaderHorarios">
       <Grid item xs={12} sm={12} className="DataGrid">
         Horarios Correspondientes a:<b> {materia.nombre?.toUpperCase()}</b>
       </Grid>
-      <Grid item xs={12} sm={3} className="DataGrid">
+      <Grid item xs={12} sm={3} className="DataGrid horariosHeader">
         Turno
       </Grid>
-      <Grid item xs={12} sm={3} className="DataGrid">
+      <Grid item xs={12} sm={3} className="DataGrid horariosHeader">
         Día
       </Grid>
-      <Grid item xs={12} sm={3} className="DataGrid">
+      <Grid item xs={12} sm={3} className="DataGrid horariosHeader">
         Hora de Inicio
       </Grid>
-      <Grid item xs={12} sm={3} className="DataGrid">
+      <Grid item xs={12} sm={3} className="DataGrid horariosHeader">
         Hora de Fin
       </Grid>
       {materia.dias.map((horario) => {

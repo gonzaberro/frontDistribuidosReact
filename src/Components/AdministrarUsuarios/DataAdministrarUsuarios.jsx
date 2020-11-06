@@ -46,12 +46,40 @@ export default function DataMaterias(props) {
   };
 
   return (
-    <Grid container className="ContainerDataGrid">
-      <Grid item xs={12} sm={2} className="DataGrid">
-        {props.usuario.nombre}
+    <Grid
+      container
+      className="ContainerDataGrid"
+      style={{ borderBottom: "1px solid black" }}
+    >
+      <Grid item xs={12} sm={1} className="DataGrid">
+        {props.usuario.imagen !== "" ? (
+          <img
+            src={props.usuario.imagen}
+            width="100"
+            style={{ borderRadius: "5px", border: "3px solid rgb(150 10 10)" }}
+          ></img>
+        ) : (
+          <div
+            style={{
+              borderRadius: "5px",
+              border: "3px solid rgb(150 10 10)",
+              width: "100px",
+              height: "130px",
+              marginLeft: "13px",
+              justifyContent: "center",
+              textAlign: "center",
+              alignItems: "center",
+              display: "flex",
+              color: "#ccc",
+              fontStyle: "italic",
+            }}
+          >
+            Sin Imagen
+          </div>
+        )}
       </Grid>
       <Grid item xs={12} sm={2} className="DataGrid">
-        {props.usuario.apellido}
+        {props.usuario.nombre} {props.usuario.apellido}
       </Grid>
       <Grid item xs={12} sm={1} className="DataGrid">
         {props.usuario.dni}
@@ -71,7 +99,7 @@ export default function DataMaterias(props) {
           Editar
         </Button>
       </Grid>
-      <Grid item xs={12} sm={2} className="DataGrid">
+      <Grid item xs={12} sm={3} className="DataGrid">
         <Button variant="contained" color="secondary" onClick={eliminarUsuario}>
           Eliminar Usuario
         </Button>

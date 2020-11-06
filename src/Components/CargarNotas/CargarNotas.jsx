@@ -9,12 +9,16 @@ export default function CargarNotas() {
     <div className="Materias">
       <Grid container>
         <Grid item md={5}>
-          <label className="headerCargarNotas">Cargar notas de Materias</label>
+          <label className="headerCargarNotas">
+            <h2>Cargar notas de Materias</h2>
+          </label>
           <NotasMateria />
         </Grid>
         <Grid md={1}></Grid>
         <Grid item md={5}>
-          <label className="headerCargarNotas">Cargar notas de Exámenes</label>
+          <label className="headerCargarNotas">
+            <h2>Cargar notas de Exámenes</h2>
+          </label>
           <NotasExamen />
         </Grid>
       </Grid>

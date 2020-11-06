@@ -9,3 +9,6 @@
 .containerNotasMaterias {
   margin-top: 15px;
 }
+.cargarNotasHeader {
+  border-bottom: 1px solid black;
+}

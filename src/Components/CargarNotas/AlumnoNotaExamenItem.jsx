@@ -38,31 +38,37 @@ export default function AlumnoNotaExamenItem(props) {
       });
   };
 
+  const fechaNotasValido = () => {
+    if (
+      new Date(
+        props.examenFinal?.materia?.periodoInscripcion?.fechaLimiteNota
+      ) > new Date()
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <>
-      <Grid item xs={12} sm={3} className="DataGrid">
+      <Grid item xs={12} sm={4} className="DataGrid">
         {props.alumno.usuario?.nombre + " " + props.alumno?.usuario?.apellido}
       </Grid>
-      <Grid item xs={12} sm={3} className="DataGrid">
+      <Grid item xs={12} sm={4} className="DataGrid">
         {props.alumno?.usuario?.dni}
       </Grid>
       <Grid item xs={12} sm={2} className="DataGrid">
         <TextField
           id="outlined-basic"
+          disabled={fechaNotasValido()}
           variant="outlined"
+          inputProps={{ min: 0, style: { textAlign: "center", height: "0px" } }} // the change is here
           className="InputsDato"
           value={notaParcial}
           onChange={(event) => setNotaParcial(event.target.value)}
         />
       </Grid>
-      <Grid item xs={12} sm={2} className="DataGrid">
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          className="InputsDato"
-          value={props.alumno?.calificacion}
-        />
-      </Grid>
+
       <Grid item xs={12} sm={2} className="DataGrid">
         <Button
           variant="contained"

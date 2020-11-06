@@ -8,14 +8,17 @@ import { useSnackbar } from "notistack";
 import { setAlumnosNotasMateria } from "../../actions/CargarNotasActions";
 
 export default function AlumnoNotaMateriaItem(props) {
-  const [notaParcial, setNotaParcial] = useState(props.alumno?.calificacion);
+  const [notaParcial, setNotaParcial] = useState(
+    props.alumno?.calificacionExamen
+  );
+  const [notaTp, setNotaTp] = useState(props.alumno?.calificacionTps);
   const dispatch = useDispatch();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const actualizarNota = () => {
     apiCalls
-      .setCalificacionMateria(props.alumno?.idInscripcion, notaParcial)
+      .setCalificacionMateria(props.alumno?.idInscripcion, notaParcial, notaTp)
       .then((response) => {
         enqueueSnackbar("Se actualzó la nota del alumno", {
           variant: "success",
@@ -38,6 +41,15 @@ export default function AlumnoNotaMateriaItem(props) {
       });
   };
 
+  const fechaNotasValido = () => {
+    if (
+      new Date(props.materia?.periodoInscripcion?.fechaLimiteNota) > new Date()
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <>
       <Grid item xs={12} sm={3} className="DataGrid">
@@ -50,6 +62,8 @@ export default function AlumnoNotaMateriaItem(props) {
         <TextField
           id="outlined-basic"
           variant="outlined"
+          inputProps={{ min: 0, style: { textAlign: "center", height: "0px" } }} // the change is here
+          disabled={fechaNotasValido()}
           className="InputsDato"
           value={notaParcial}
           onChange={(event) => setNotaParcial(event.target.value)}
@@ -58,9 +72,12 @@ export default function AlumnoNotaMateriaItem(props) {
       <Grid item xs={12} sm={2} className="DataGrid">
         <TextField
           id="outlined-basic"
+          disabled={fechaNotasValido()}
+          inputProps={{ min: 0, style: { textAlign: "center", height: "0px" } }} // the change is here
           variant="outlined"
           className="InputsDato"
-          value={props.alumno?.calificacion}
+          value={notaTp}
+          onChange={(event) => setNotaTp(event.target.value)}
         />
       </Grid>
       <Grid item xs={12} sm={2} className="DataGrid">

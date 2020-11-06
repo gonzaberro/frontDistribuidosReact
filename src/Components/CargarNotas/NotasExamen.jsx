@@ -65,18 +65,18 @@ export default function NotasExamen() {
         </Select>
         {alumnosNotasExamen.length > 0 && (
           <>
-            <Grid container>
-              <Grid item xs={12} sm={3} className="DataGrid">
+            <Grid container style={{ marginTop: "8px" }}>
+              <Grid item xs={12} sm={4} className="DataGrid cargarNotasHeader">
                 Nombre
               </Grid>
-              <Grid item xs={12} sm={3} className="DataGrid">
+              <Grid item xs={12} sm={4} className="DataGrid cargarNotasHeader">
                 Documento
               </Grid>
-              <Grid item xs={12} sm={2} className="DataGrid">
+              <Grid item xs={12} sm={2} className="DataGrid cargarNotasHeader">
                 Parcial
               </Grid>
-              <Grid item xs={12} sm={2} className="DataGrid">
-                Tp
+              <Grid item xs={12} sm={2} className="DataGrid cargarNotasHeader">
+                Acción
               </Grid>
 
               {alumnosNotasExamen[0].alumnos.map((alumno) => {

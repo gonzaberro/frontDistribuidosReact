@@ -50,3 +50,20 @@
   font-weight: bold;
   color: #3fce36;
 }
+.horariosHeader {
+  border-bottom: 1px solid white;
+}
+.horariosHeader:hover {
+}
+.containerHeaderHorarios {
+  padding: 10px;
+}
+.modalBackGround {
+  background: linear-gradient(
+    0deg,
+    rgba(111, 34, 34, 1) 30%,
+    rgba(177, 21, 21, 1) 100%,
+    rgba(194, 24, 24, 1) 100%
+  );
+  color: white !important;
+}

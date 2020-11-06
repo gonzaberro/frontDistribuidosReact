@@ -77,17 +77,20 @@ export default function NotasMateria() {
         {alumnosNotasMateria.length > 0 && (
           <>
             <Grid container>
-              <Grid item xs={12} sm={3} className="DataGrid">
+              <Grid item xs={12} sm={3} className="DataGrid cargarNotasHeader">
                 Nombre
               </Grid>
-              <Grid item xs={12} sm={3} className="DataGrid">
+              <Grid item xs={12} sm={3} className="DataGrid cargarNotasHeader">
                 Documento
               </Grid>
-              <Grid item xs={12} sm={2} className="DataGrid">
+              <Grid item xs={12} sm={2} className="DataGrid cargarNotasHeader">
                 Parcial
               </Grid>
-              <Grid item xs={12} sm={2} className="DataGrid">
+              <Grid item xs={12} sm={2} className="DataGrid cargarNotasHeader">
                 Tp
+              </Grid>
+              <Grid item xs={12} sm={2} className="DataGrid cargarNotasHeader">
+                Acción
               </Grid>
               {alumnosNotasMateria[0].alumnos.map((alumno) => {
                 return (

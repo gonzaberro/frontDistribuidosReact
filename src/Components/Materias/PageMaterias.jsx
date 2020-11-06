@@ -66,6 +66,7 @@ export default function PageMaterias() {
               maxWidth: "40vw",
               marginLeft: "30%",
             }}
+            className="modalBackGround"
           >
             <HorariosMateria />
           </div>
@@ -106,6 +107,7 @@ export default function PageMaterias() {
               maxWidth: "40vw",
               marginLeft: "30%",
             }}
+            className="modalBackGround"
           >
             <AlumnosMateria />
           </div>

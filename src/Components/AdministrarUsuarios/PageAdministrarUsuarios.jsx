@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import AdministrarUsuarios from "./AdministrarUsuarios";
 import { useDispatch, useSelector } from "react-redux";
-import { setUsuarios } from "../../actions/AdministrarUsuariosActions";
+import {
+  setUsuarios,
+  setSeleccionarUsuario,
+} from "../../actions/AdministrarUsuariosActions";
 import { apiCalls } from "../../api/apiCalls";
 import Modal from "@material-ui/core/Modal";
 import { setModal } from "../../actions/ModalActions";
@@ -28,6 +31,7 @@ export default function PageAdministrarUsuarios() {
 
   const handleClose = () => {
     dispatch(setModal(false));
+    dispatch(setSeleccionarUsuario({}));
   };
 
   return (

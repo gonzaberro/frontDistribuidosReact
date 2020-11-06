@@ -5,11 +5,9 @@ import "../../Css/Materias.css";
 export default function HeaderAdministrarUsuarios() {
   return (
     <Grid container>
+      <Grid item xs={12} sm={1} className="HeaderGrid"></Grid>
       <Grid item xs={12} sm={2} className="HeaderGrid">
         Nombre
-      </Grid>
-      <Grid item xs={12} sm={2} className="HeaderGrid">
-        Apellido
       </Grid>
       <Grid item xs={12} sm={1} className="HeaderGrid">
         Documento
@@ -23,7 +21,7 @@ export default function HeaderAdministrarUsuarios() {
       <Grid item xs={12} sm={1} className="HeaderGrid">
         Editar
       </Grid>
-      <Grid item xs={12} sm={2} className="HeaderGrid">
+      <Grid item xs={12} sm={3} className="HeaderGrid">
         Acciones
       </Grid>
     </Grid>
