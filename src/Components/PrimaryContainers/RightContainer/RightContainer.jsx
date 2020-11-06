@@ -6,6 +6,7 @@ import PageMaterias from "../../Materias/PageMaterias";
 import PageExamenesFinales from "../../ExamenesFinales/PageExamenesFinales";
 import PageInformacionPersonal from "../../InformacionPersonal/PageInformacionPersonal";
 import PageAdministrarUsuarios from "../../AdministrarUsuarios/PageAdministrarUsuarios";
+import PageCargarNotas from "../../CargarNotas/PageCargarNotas";
 export default function RightContainer() {
   const menuSelected = useSelector((state) => state.menuSelected.menuSelected);
 
@@ -19,6 +20,8 @@ export default function RightContainer() {
         return <PageInformacionPersonal />;
       case MenuOptions.AdministrarUsuarios:
         return <PageAdministrarUsuarios />;
+      case MenuOptions.CargarNotas:
+        return <PageCargarNotas />;
       default:
         return <div></div>;
     }

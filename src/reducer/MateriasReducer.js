@@ -2,7 +2,10 @@ import { actions } from "../actions/types";
 
 const initialState = {
   materias: [],
-  horariosMateriaSeleccionada:[]
+  materiaSeleccionada:{},
+   docentes:[],
+  searchField:"",
+  alumnos:[]
 };
 
 export default function (state = initialState, action) {
@@ -12,11 +15,28 @@ export default function (state = initialState, action) {
         ...state,
         materias: action.payload,
       };
-      case actions.horariosMateriaSeleccionada:
+      case actions.setMateriaSeleccionada:
       return {
         ...state,
-        horariosMateriaSeleccionada: action.payload,
+        materiaSeleccionada: action.payload,
       };
+       case actions.searchFieldMateria:
+      return {
+        ...state,
+        searchField: action.payload,
+      };
+
+      case actions.listaDocentes:
+        return {
+          ...state,
+          docentes: action.payload,
+        };
+      case actions.alumnosMateria:
+        return {
+          ...state,
+          alumnos: action.payload,
+        };
+
 
     default:
       return state;

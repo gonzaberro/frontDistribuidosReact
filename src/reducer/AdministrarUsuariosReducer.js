@@ -1,8 +1,10 @@
+
 import { actions } from "../actions/types";
 
 const initialState = {
   usuarios: [],
-  usuarioSeleccionado:{}
+  usuarioSeleccionado:{},
+  searchField:""
 };
 
 export default function (state = initialState, action) {
@@ -16,6 +18,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         usuarioSeleccionado: action.payload,
+      };
+       case actions.searchFieldUsuario:
+      return {
+        ...state,
+        searchField: action.payload,
       };
 
     default:

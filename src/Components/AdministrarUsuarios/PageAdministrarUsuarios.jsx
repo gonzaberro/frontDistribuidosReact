@@ -6,8 +6,10 @@ import { apiCalls } from "../../api/apiCalls";
 import Modal from "@material-ui/core/Modal";
 import { setModal } from "../../actions/ModalActions";
 import FormInfoUsuario from "./FormInfoUsuario";
+import { useSnackbar } from "notistack";
 
 export default function PageAdministrarUsuarios() {
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const open_modal = useSelector((state) => state.modalReducer.open_modal);
 
@@ -18,7 +20,9 @@ export default function PageAdministrarUsuarios() {
         dispatch(setUsuarios(response.data.data));
       })
       .catch((error) => {
-        console.log(error.message);
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
       });
   });
 

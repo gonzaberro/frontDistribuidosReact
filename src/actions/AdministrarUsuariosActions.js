@@ -16,3 +16,12 @@ export function setSeleccionarUsuario(usuario) {
     });
   };
 }
+
+export function searchUsuario(search) {
+  return (dispatch) => {
+    dispatch({
+      type: actions.searchFieldUsuario,
+      payload: search
+    });
+  };
+}

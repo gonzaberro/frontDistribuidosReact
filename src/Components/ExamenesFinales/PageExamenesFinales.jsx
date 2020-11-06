@@ -5,19 +5,25 @@ import { apiCalls } from "../../api/apiCalls";
 import { setExamenesUsuario } from "../../actions/ExamenesActions";
 import { setModal } from "../../actions/ModalActions";
 import Modal from "@material-ui/core/Modal";
+import FormExamen from "./FormExamen";
+import { useSnackbar } from "notistack";
 
 export default function PageMaterias() {
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const open_modal = useSelector((state) => state.modalReducer.open_modal);
+  const idUsuario = useSelector((state) => state.informacionPersonal.idUsuario);
 
   useEffect(() => {
     apiCalls
-      .getExamenesUsuario(1)
+      .getExamenesUsuario(idUsuario)
       .then((response) => {
         dispatch(setExamenesUsuario(response.data.data));
       })
       .catch((error) => {
-        console.log(error.message);
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
       });
   });
 
@@ -28,6 +34,7 @@ export default function PageMaterias() {
   return (
     <>
       <ExamenesFinales />
+
       <Modal
         open={open_modal ? true : false}
         onClose={handleClose}
@@ -43,7 +50,9 @@ export default function PageMaterias() {
             maxWidth: "40vw",
             marginLeft: "30%",
           }}
-        ></div>
+        >
+          <FormExamen />
+        </div>
       </Modal>
     </>
   );

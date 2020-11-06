@@ -1,5 +1,5 @@
 import { actions } from "../actions/types";
-const initialState = { open_modal: false };
+const initialState = { open_modal: false,functionModal:""};
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -7,6 +7,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         open_modal: action.payload,
+      };
+      case actions.modalFunction:
+      return {
+        ...state,
+        functionModal: action.payload,
       };
 
     default:

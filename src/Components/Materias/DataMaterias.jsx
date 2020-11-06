@@ -1,55 +1,108 @@
-import React, { useState } from "react";
+import React from "react";
 import { Grid, Button } from "@material-ui/core";
 import "../../Css/Materias.css";
 import { useSelector, useDispatch } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBellSlash, faBell } from "@fortawesome/free-solid-svg-icons";
-import { setHorariosMateriaSeleccionada } from "../../actions/MateriasActions";
+import { useSnackbar } from "notistack";
+
+import {
+  setMateriaSeleccionada,
+  setAlumnos,
+} from "../../actions/MateriasActions";
 import { setMateriasUsuario } from "../../actions/MateriasActions";
-import { setModal } from "../../actions/ModalActions";
+import { setModal, modalFunction } from "../../actions/ModalActions";
 import { apiCalls } from "../../api/apiCalls";
+import { ModalFunctions } from "../../actions/types";
 
 export default function DataMaterias(props) {
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
-  const [tipoBell, setTipoBell] = useState(
-    props.materia?.recordatorio ? faBell : faBellSlash
-  );
+  const idUsuario = useSelector((state) => state.informacionPersonal.idUsuario);
+
   const rolUsuario = useSelector((state) => state.informacionPersonal.idRol);
 
-  const showHorarios = (nombre, horarios) => {
-    dispatch(setHorariosMateriaSeleccionada({ nombre, horarios }));
+  const showHorarios = (materia) => {
+    dispatch(modalFunction(ModalFunctions.horariosMateria));
+    dispatch(setMateriaSeleccionada(materia));
     dispatch(setModal(true));
   };
 
-  const alumnosMateria = () => {
-    window.open(
-      "localhost:8080/modulo-admin/materias/cuatrimestres-pdf",
-      "_blank"
-    );
-  };
-
-  const incribirMateria = (materia) => {
-    const recordatorio = tipoBell === faBell ? true : false;
-
+  const materiasUsuario = () => {
     apiCalls
-      .inscribirMateria({
-        idMateria: materia.id,
-        idUsuario: 1,
-        recordatorio: recordatorio,
-        calificacion: 10,
-      })
+      .getMateriasUsuario(idUsuario)
       .then((response) => {
-        apiCalls
-          .getMateriasUsuario(1)
-          .then((response) => {
-            dispatch(setMateriasUsuario(response.data.data));
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
+        dispatch(setMateriasUsuario(response.data.data));
       })
       .catch((error) => {
-        console.log(error.message);
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
+      });
+  };
+
+  const anularInscripcionMateria = () => {
+    apiCalls
+      .deleteInscripcionMateria(props.materia?.idInscripcion)
+      .then((response) => {
+        materiasUsuario();
+        enqueueSnackbar("Se anulo la inscripción a la materia", {
+          variant: "success",
+        });
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
+      });
+  };
+  const eliminarMateria = () => {
+    apiCalls
+      .deleteMaterias(props.materia?.id)
+      .then((response) => {
+        materiasUsuario();
+        enqueueSnackbar("Se eliminó la materia", {
+          variant: "success",
+        });
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
+      });
+  };
+
+  const verAlumnos = (materia) => {
+    dispatch(modalFunction(ModalFunctions.alumnosMateria));
+    dispatch(setMateriaSeleccionada(materia));
+    dispatch(setModal(true));
+    apiCalls
+      .getAlumnosMateria(materia.id)
+      .then((response) => {
+        dispatch(setAlumnos(response.data.data));
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
+      });
+  };
+
+  const incribirMateria = () => {
+    apiCalls
+      .inscribirMateria({
+        idMateria: props.materia?.id,
+        idUsuario: idUsuario,
+        calificacion: 0,
+      })
+      .then((response) => {
+        materiasUsuario();
+        enqueueSnackbar("Te inscribiste a la materia", {
+          variant: "success",
+        });
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
       });
   };
 
@@ -72,14 +125,18 @@ export default function DataMaterias(props) {
             variant="contained"
             color="secondary"
             className="ButtonNuevaMateria"
-            onClick={() => incribirMateria(props.materia)}
+            onClick={() => incribirMateria()}
           >
             Inscribirme
           </Button>
         );
       } else {
         return (
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => anularInscripcionMateria()}
+          >
             Anular Inscripción
           </Button>
         );
@@ -94,17 +151,8 @@ export default function DataMaterias(props) {
   return (
     <Grid container className="ContainerDataGrid">
       <Grid item xs={12} sm={3} className="DataGrid">
-        <FontAwesomeIcon
-          className="IconMateriaOn"
-          icon={tipoBell}
-          title="Recordatorios Examenes Finales"
-          onClick={() =>
-            setTipoBell(tipoBell === faBellSlash ? faBell : faBellSlash)
-          }
-        />
-        {props.materia?.nombre.toUpperCase()}
+        {props.materia?.nombre}
       </Grid>
-
       <Grid item xs={12} sm={3} className="DataGrid">
         {props.materia?.profesor?.nombre} {props.materia?.profesor?.apellido}
       </Grid>
@@ -118,9 +166,7 @@ export default function DataMaterias(props) {
         <Button
           variant="contained"
           color="primary"
-          onClick={() =>
-            showHorarios(props.materia?.nombre, props.materia?.horarios)
-          }
+          onClick={() => showHorarios(props.materia)}
         >
           Horarios
         </Button>
@@ -131,9 +177,18 @@ export default function DataMaterias(props) {
           <Button
             variant="contained"
             color="secondary"
-            onClick={alumnosMateria}
+            onClick={() => verAlumnos(props.materia)}
           >
             Ver Alumnos
+          </Button>
+        )}
+        {rolUsuario === 1 && (
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={eliminarMateria}
+          >
+            Eliminar Materia
           </Button>
         )}
       </Grid>

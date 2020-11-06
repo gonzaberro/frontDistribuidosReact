@@ -5,9 +5,19 @@ export const actions = {
   SET_MODAL:"SET_MODAL",
   setRolUser:"setRolUser",
   setMateriasUser:"SetMateriasUser",
-  horariosMateriaSeleccionada:"horariosMateriaSeleccionada",
+  setMateriaSeleccionada:"setMateriaSeleccionada",
   setSeleccionarUsuario:"setSeleccionarUsuario",
-  setExamenesUsuario:"setExamenesUsuario"
+  setExamenesUsuario:"setExamenesUsuario",
+  searchFieldMateria:"searchFieldMateria",
+  searchFieldExamen:"searchFieldExamen",
+  searchFieldUsuario:"setSearchFieldUsuario",
+  modalFunction:"Modla Function",
+  listaDocentes:"Lista Docentes",
+  alumnosMateria:"Alumnos Materia",
+  setMateriasExamen:"Set Materias Examen",
+  setAlumnosMateriaExamen:"Alumnos Materia Examen",
+  setAlumnosNotasExamen:"setAlumnosNotasExamen"
+
 };
 export const MenuOptions = {
   Materias: "Materias",
@@ -16,5 +26,11 @@ export const MenuOptions = {
   InformacionPersonal: "Información Personal",
   AdministrarUsuarios: "Administar Usuarios",
   CargarNotas: "Cargar Notas",
+
+};
+export const ModalFunctions = {
+  nuevaMateria :"Nueva Materia",
+  horariosMateria : "Horarios Materia",
+  alumnosMateria:"Alumnos Materia"
 
 };

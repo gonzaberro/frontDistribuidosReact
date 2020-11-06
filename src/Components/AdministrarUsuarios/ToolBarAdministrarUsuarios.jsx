@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Grid, Button, TextField } from "@material-ui/core";
 import "../../Css/AdministrarUsuarios.css";
 import { setModal } from "../../actions/ModalActions";
+import { searchUsuario } from "../../actions/AdministrarUsuariosActions";
 
 export default function ToolBarAdministrarUsuarios() {
   const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
+
   const openModal = () => {
     dispatch(setModal(true));
+  };
+
+  const _handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      dispatch(searchUsuario(search));
+    }
   };
 
   return (
@@ -18,6 +27,8 @@ export default function ToolBarAdministrarUsuarios() {
           id="outlined-basic"
           label="Buscar Usuario"
           variant="outlined"
+          onChange={(event) => setSearch(event.target.value)}
+          onKeyPress={_handleKeyDown}
         />
       </Grid>
       <Grid item xs={12} sm={7}></Grid>

@@ -8,3 +8,11 @@ export function setModal(open) {
     });
   };
 }
+export function modalFunction(funcion) {
+  return (dispatch) => {
+    dispatch({
+      type: actions.modalFunction,
+      payload: funcion
+    });
+  };
+}

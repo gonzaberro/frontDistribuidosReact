@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Button } from "@material-ui/core";
 import "../../Css/ExamenesFinales.css";
 import { useSelector, useDispatch } from "react-redux";
 import { apiCalls } from "../../api/apiCalls";
 import { setExamenesUsuario } from "../../actions/ExamenesActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBellSlash, faBell } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
+import { useSnackbar } from "notistack";
+import audio from "../../audio/iphone.mp3";
+import useSound from "use-sound";
 
 export default function DataExamenesFinales(props) {
+  const { enqueueSnackbar } = useSnackbar();
   const rolUsuario = useSelector((state) => state.informacionPersonal.idRol);
-
+  const idUsuario = useSelector((state) => state.informacionPersonal.idUsuario);
+  const [play] = useSound(audio);
+  const [tipoBell, setTipoBell] = useState(
+    props.examen?.recordatorio ? faBell : faBellSlash
+  );
   const dispatch = useDispatch();
 
   const periodoInscripcionValido = () => {
@@ -23,26 +34,74 @@ export default function DataExamenesFinales(props) {
     }
   };
 
-  const incribirExamen = (materia) => {
+  useEffect(() => {
+    return () => dispatch(setExamenesUsuario([]));
+  }, [dispatch]);
+
+  const examenesUsuario = () => {
+    apiCalls
+      .getExamenesUsuario(idUsuario)
+      .then((response) => {
+        dispatch(setExamenesUsuario(response.data.data));
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
+      });
+  };
+
+  const incribirExamen = () => {
+    const recordatorio = tipoBell === faBell ? true : false;
     apiCalls
       .inscribirExamen({
         idExamenFinal: props.examen?.id,
-        idUsuario: 1,
-        recordatorio: true,
-        calificacion: 10,
+        idUsuario: idUsuario,
+        recordatorio: recordatorio,
+        calificacion: 0,
       })
       .then((response) => {
-        apiCalls
-          .getExamenesUsuario(1)
-          .then((response) => {
-            dispatch(setExamenesUsuario(response.data.data));
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
+        examenesUsuario();
+        enqueueSnackbar("Te inscribiste al examen final", {
+          variant: "success",
+        });
       })
       .catch((error) => {
-        console.log(error.message);
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
+      });
+  };
+
+  const anularInscripcionExamen = () => {
+    apiCalls
+      .deleteInscripcionExamen(props.examen?.idInscripcion)
+      .then((response) => {
+        examenesUsuario();
+        enqueueSnackbar("Anulaste tu inscripción al examen final", {
+          variant: "success",
+        });
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
+      });
+  };
+
+  const eliminarExamen = () => {
+    apiCalls
+      .deleteExamenes(props.examen?.id)
+      .then((response) => {
+        examenesUsuario();
+        enqueueSnackbar("Se eliminó el exámen", {
+          variant: "success",
+        });
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
       });
   };
 
@@ -54,14 +113,18 @@ export default function DataExamenesFinales(props) {
             variant="contained"
             color="secondary"
             className="ButtonNuevaMateria"
-            onClick={() => incribirExamen(props.materia)}
+            onClick={() => incribirExamen()}
           >
             Inscribirme
           </Button>
         );
       } else {
         return (
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => anularInscripcionExamen()}
+          >
             Anular Inscripción
           </Button>
         );
@@ -72,9 +135,43 @@ export default function DataExamenesFinales(props) {
       return <div></div>;
     }
   };
+
+  const setReminder = () => {
+    setTipoBell(tipoBell === faBellSlash ? faBell : faBellSlash);
+    apiCalls
+      .setReminderExamen(
+        props.examen?.idInscripcion,
+        tipoBell === faBellSlash ? true : false
+      )
+      .then((response) => {
+        if (tipoBell === faBellSlash) {
+          enqueueSnackbar("Se activo el recordatorio para la exámen", {
+            variant: "success",
+          });
+          play();
+        } else {
+          enqueueSnackbar("Se desactivo el recordatorio para el exámen", {
+            variant: "success",
+          });
+        }
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
+      });
+  };
   return (
     <Grid container className="ContainerDataGrid">
       <Grid item xs={12} sm={3} className="DataGrid">
+        {props.examen?.inscripto && (
+          <FontAwesomeIcon
+            className="IconMateriaOn"
+            icon={tipoBell}
+            title="Recordatorios Examenes Finales"
+            onClick={setReminder}
+          />
+        )}
         {props.examen?.materia?.nombre?.toUpperCase()}
       </Grid>
       <Grid item xs={12} sm={3} className="DataGrid">
@@ -86,11 +183,20 @@ export default function DataExamenesFinales(props) {
         {props.examen?.fecha}
       </Grid>
       <Grid item xs={12} sm={1} className="DataGrid">
-        11:00 AM
+        {props.examen?.materia?.turno?.horaDesde} hs
       </Grid>
 
       <Grid item xs={12} sm={3} className="DataGrid">
         {rolUsuario === 3 && <ActionsEstudiante />}
+        {rolUsuario === 1 && (
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={eliminarExamen}
+          >
+            Eliminar Examen
+          </Button>
+        )}
       </Grid>
     </Grid>
   );

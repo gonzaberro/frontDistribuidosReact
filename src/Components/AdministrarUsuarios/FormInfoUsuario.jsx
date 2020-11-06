@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Grid,
   TextField,
@@ -7,8 +7,14 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@material-ui/core";
+import { apiCalls } from "../../api/apiCalls";
+import { setUsuarios } from "../../actions/AdministrarUsuariosActions";
+import { setModal } from "../../actions/ModalActions";
+import { useSnackbar } from "notistack";
 
 export default function FormInfoUsuario(props) {
+  const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
   const [estudiante, setEstudiante] = useState(false);
   const [maestro, setMaestro] = useState(false);
   const [administrador, setAdministrador] = useState(false);
@@ -26,7 +32,7 @@ export default function FormInfoUsuario(props) {
   const administrarUsuarios = useSelector((state) => state.administrarUsuarios);
 
   useEffect(() => {
-    if (administrarUsuarios.usuarioSeleccionado) {
+    if (administrarUsuarios.usuarioSeleccionado.nombre) {
       const usuario = administrarUsuarios.usuarioSeleccionado;
       setTelefono(usuario.telefono);
       setNombre(usuario.nombre);
@@ -68,6 +74,49 @@ export default function FormInfoUsuario(props) {
     }
   };
 
+  const saveUser = () => {
+    const user = {
+      nombre: nombre,
+      apellido: apellido,
+      dni: documento,
+      telefono: telefono,
+      email: email,
+      password: password,
+      direccion: {
+        pais: pais,
+        provincia: provincia,
+        localidad: localidad,
+        calle: direccion,
+      },
+      imagen: "string",
+      primerIngreso: true,
+      idRol: (estudiante && 3) || (maestro && 2) || (administrador && 1),
+    };
+    apiCalls
+      .createUser(user)
+      .then((response) => {
+        apiCalls
+          .getUsuarios()
+          .then((response) => {
+            dispatch(setUsuarios(response.data.data));
+            dispatch(setModal(false));
+            enqueueSnackbar("Se guardó el usuario", {
+              variant: "success",
+            });
+          })
+          .catch((error) => {
+            enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+              variant: "error",
+            });
+          });
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
+      });
+  };
+
   return (
     <>
       <Grid container className="ColumInformacionPersonal">
@@ -83,7 +132,7 @@ export default function FormInfoUsuario(props) {
               variant="outlined"
               className="InputsDato"
               value={telefono}
-              onChange={(value) => setTelefono(value.value)}
+              onChange={(event) => setTelefono(event.target.value)}
             />
             <TextField
               fullWidth
@@ -92,7 +141,7 @@ export default function FormInfoUsuario(props) {
               variant="outlined"
               className="InputsDato"
               value={email}
-              onChange={(value) => setEmail(value.value)}
+              onChange={(event) => setEmail(event.target.value)}
             />
             <TextField
               fullWidth
@@ -101,7 +150,7 @@ export default function FormInfoUsuario(props) {
               variant="outlined"
               className="InputsDato"
               value={direccion}
-              onChange={(value) => setDireccion(value.value)}
+              onChange={(event) => setDireccion(event.target.value)}
             />
             <TextField
               fullWidth
@@ -110,7 +159,7 @@ export default function FormInfoUsuario(props) {
               variant="outlined"
               className="InputsDato"
               value={pais}
-              onChange={(value) => setPais(value.value)}
+              onChange={(event) => setPais(event.target.value)}
             />
             <TextField
               fullWidth
@@ -119,7 +168,7 @@ export default function FormInfoUsuario(props) {
               variant="outlined"
               className="InputsDato"
               value={provincia}
-              onChange={(value) => setProvincia(value.value)}
+              onChange={(event) => setProvincia(event.target.value)}
             />
             <TextField
               fullWidth
@@ -128,7 +177,7 @@ export default function FormInfoUsuario(props) {
               variant="outlined"
               className="InputsDato"
               value={localidad}
-              onChange={(value) => setLocalidad(value.value)}
+              onChange={(event) => setLocalidad(event.target.value)}
             />
           </form>
         </Grid>
@@ -142,7 +191,7 @@ export default function FormInfoUsuario(props) {
               variant="outlined"
               className="InputsDato"
               value={nombre}
-              onChange={(value) => setNombre(value.value)}
+              onChange={(event) => setNombre(event.target.value)}
             />
             <TextField
               fullWidth
@@ -151,7 +200,7 @@ export default function FormInfoUsuario(props) {
               variant="outlined"
               className="InputsDato"
               value={apellido}
-              onChange={(value) => setApellido(value.value)}
+              onChange={(event) => setApellido(event.target.value)}
             />
             <TextField
               fullWidth
@@ -160,7 +209,7 @@ export default function FormInfoUsuario(props) {
               variant="outlined"
               className="InputsDato"
               value={documento}
-              onChange={(value) => setDocumento(value.value)}
+              onChange={(event) => setDocumento(event.target.value)}
             />
             <label>Rol del Usuario</label>
             <Grid container>
@@ -197,7 +246,11 @@ export default function FormInfoUsuario(props) {
                 />
               </Grid>
             </Grid>
-            <Button variant="contained" className="ButtonNuevoUsuario">
+            <Button
+              variant="contained"
+              className="ButtonNuevoUsuario"
+              onClick={saveUser}
+            >
               Guardar Cambios
             </Button>
           </form>

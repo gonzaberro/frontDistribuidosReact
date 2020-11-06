@@ -9,3 +9,21 @@ export function setExamenesUsuario(examenes) {
   };
 }
 
+
+export function setSearchExamen(search) {
+  return (dispatch) => {
+    dispatch({
+      type: actions.searchFieldExamen,
+      payload: search
+    });
+  };
+}
+export function setMateriasExamen(materias) {
+  return (dispatch) => {
+    dispatch({
+      type: actions.setMateriasExamen,
+      payload: materias
+    });
+  };
+}
+

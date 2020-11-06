@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { Grid, Button } from "@material-ui/core";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import "../../Css/Materias.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBellSlash, faBell } from "@fortawesome/free-solid-svg-icons";
+
 import { apiCalls } from "../../api/apiCalls";
 import {
   setUsuarios,
   setSeleccionarUsuario,
 } from "../../actions/AdministrarUsuariosActions";
 import { setModal } from "../../actions/ModalActions";
+import { useSnackbar } from "notistack";
 
 export default function DataMaterias(props) {
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
-
-  const [tipoBell, setTipoBell] = useState(faBell);
 
   const eliminarUsuario = () => {
     apiCalls
@@ -24,13 +23,20 @@ export default function DataMaterias(props) {
           .getUsuarios()
           .then((response) => {
             dispatch(setUsuarios(response.data.data));
+            enqueueSnackbar("Se eliminó el usuario", {
+              variant: "success",
+            });
           })
           .catch((error) => {
-            console.log(error.message);
+            enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+              variant: "error",
+            });
           });
       })
       .catch((error) => {
-        console.log(error.message);
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
       });
   };
 
@@ -54,7 +60,7 @@ export default function DataMaterias(props) {
         {props.usuario.email}
       </Grid>
       <Grid item xs={12} sm={2} className="DataGrid">
-        {props.usuario.rol?.descripcion}
+        {props.usuario.rol?.descripcion.toUpperCase()}
       </Grid>
       <Grid item xs={12} sm={1} className="DataGrid">
         <Button

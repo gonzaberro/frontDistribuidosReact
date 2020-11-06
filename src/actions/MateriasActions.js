@@ -9,11 +9,38 @@ export function setMateriasUsuario(materias) {
   };
 }
 
-export function setHorariosMateriaSeleccionada(horarios) {
+export function setMateriaSeleccionada(materia) {
   return (dispatch) => {
     dispatch({
-      type: actions.horariosMateriaSeleccionada,
-      payload: horarios
+      type: actions.setMateriaSeleccionada,
+      payload: materia
     });
   };
 }
+export function setSearchFieldMateria(search) {
+  return (dispatch) => {
+    dispatch({
+      type: actions.searchFieldMateria,
+      payload: search
+    });
+  };
+}
+export function setDocentes(docentes) {
+  return (dispatch) => {
+    dispatch({
+      type: actions.listaDocentes,
+      payload: docentes
+    });
+  };
+}
+export function setAlumnos(alumnos) {
+  return (dispatch) => {
+    dispatch({
+      type: actions.alumnosMateria,
+      payload: alumnos
+    });
+  };
+}
+
+
+

@@ -1,0 +1,11 @@
+.headerCargarNotas {
+  font-size: 15px;
+  font-weight: bold;
+  height: 20px;
+}
+.containerNotasExamen {
+  margin-top: 15px;
+}
+.containerNotasMaterias {
+  margin-top: 15px;
+}
