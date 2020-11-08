@@ -5,11 +5,13 @@ import "../../Css/ExamenesFinales.css";
 export default function HeaderExamenesFinales() {
   return (
     <Grid container>
-      <Grid item xs={12} sm={3} className="HeaderGrid">
+      <Grid item xs={12} sm={2} className="HeaderGrid">
         Nombre de Materia
       </Grid>
-
-      <Grid item xs={12} sm={3} className="HeaderGrid">
+      <Grid item xs={12} sm={2} className="HeaderGrid">
+        Turno
+      </Grid>
+      <Grid item xs={12} sm={2} className="HeaderGrid">
         Docente
       </Grid>
 

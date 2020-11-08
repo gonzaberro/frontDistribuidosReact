@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { useSnackbar } from "notistack";
 import audio from "../../audio/iphone.mp3";
 import useSound from "use-sound";
+import { apiUrl } from "../../api/api";
 
 export default function DataExamenesFinales(props) {
   const { enqueueSnackbar } = useSnackbar();
@@ -105,6 +106,15 @@ export default function DataExamenesFinales(props) {
       });
   };
 
+  const alumnosExcel = () => {
+    window.open(
+      apiUrl +
+        "/modulo-admin/usuarios-examenes-finales/notas-excel?idMateria=" +
+        props.examen?.materia?.id,
+      "_blank"
+    );
+  };
+
   const ActionsEstudiante = () => {
     if (periodoInscripcionValido()) {
       if (!props.examen?.inscripto) {
@@ -163,7 +173,7 @@ export default function DataExamenesFinales(props) {
   };
   return (
     <Grid container className="ContainerDataGrid">
-      <Grid item xs={12} sm={3} className="DataGrid">
+      <Grid item xs={12} sm={2} className="DataGrid">
         {props.examen?.inscripto && (
           <FontAwesomeIcon
             className="IconMateriaOn"
@@ -174,7 +184,10 @@ export default function DataExamenesFinales(props) {
         )}
         {props.examen?.materia?.nombre?.toUpperCase()}
       </Grid>
-      <Grid item xs={12} sm={3} className="DataGrid">
+      <Grid item xs={12} sm={2} className="DataGrid">
+        {props.examen?.materia?.turno?.descripcion.toUpperCase()}
+      </Grid>
+      <Grid item xs={12} sm={2} className="DataGrid">
         {props.examen?.materia?.profesor?.nombre}{" "}
         {props.examen?.materia?.profesor?.apellido}
       </Grid>
@@ -195,6 +208,11 @@ export default function DataExamenesFinales(props) {
             onClick={eliminarExamen}
           >
             Eliminar Examen
+          </Button>
+        )}
+        {rolUsuario === 2 && (
+          <Button variant="contained" color="secondary" onClick={alumnosExcel}>
+            Descargar Excel
           </Button>
         )}
       </Grid>

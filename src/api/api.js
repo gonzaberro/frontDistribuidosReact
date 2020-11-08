@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const apiUrl = "http://localhost:8080";
+export const apiUrl = "http://localhost:8086";
 
 export default axios.create({
   baseURL: apiUrl+"/modulo-admin",

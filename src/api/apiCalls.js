@@ -109,6 +109,17 @@ function updateUsuarioCompleto(idUsuario,parameters) {
   return api.put("/usuarios?idUsuario="+idUsuario,parameters);
 }
 
+function updateNotasMateria(parameters) {
+  
+  return api.put("/usuarios-materias/notas-excel",parameters);
+}
+
+function updateNotasExamen(parameters) {
+  
+  return api.put("/usuarios-examenes-finales/notas-excel",parameters);
+}
+
+
 export const apiCalls = {
   getUsuarios,
   deleteUsuario,
@@ -134,5 +145,7 @@ export const apiCalls = {
   loginUsuario,
   changePassword,
   updateUsuario,
-  updateUsuarioCompleto
+  updateUsuarioCompleto,
+  updateNotasMateria,
+  updateNotasExamen
 };

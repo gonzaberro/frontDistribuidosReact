@@ -1,8 +1,12 @@
 import React from "react";
 import { useDropzone } from "react-dropzone";
 import XLSX from "xlsx";
+import { apiCalls } from "../../api/apiCalls";
+import { useSnackbar } from "notistack";
 
 export default function UploadNotasExamen() {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
     maxFiles: 1,
     noClick: false,
@@ -35,7 +39,18 @@ export default function UploadNotasExamen() {
           }
         );
 
-        console.log(jsonFromExcel);
+        apiCalls
+          .updateNotasExamen({ excel: jsonFromExcel })
+          .then((response) => {
+            enqueueSnackbar("Se actualizaron las notas", {
+              variant: "success",
+            });
+          })
+          .catch((error) => {
+            enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+              variant: "error",
+            });
+          });
         removeAll();
       };
       if (rABS) reader.readAsBinaryString(file);

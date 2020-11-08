@@ -51,19 +51,19 @@ export default function MenuItems() {
         <FontAwesomeIcon className="Icon" icon={faBook} />
         <label className="LabelIcon">Materias</label>
       </div>
-      {rolUsuario !== 2 && (
-        <div
-          className={
-            menuSelected === MenuOptions.ExamenesFinales
-              ? "MenuItems-Selected MenuItems"
-              : "MenuItems"
-          }
-          onClick={() => switchMenu(MenuOptions.ExamenesFinales)}
-        >
-          <FontAwesomeIcon className="Icon" icon={faFileAlt} />
-          <label className="LabelIcon">Exámenes Finales</label>
-        </div>
-      )}
+
+      <div
+        className={
+          menuSelected === MenuOptions.ExamenesFinales
+            ? "MenuItems-Selected MenuItems"
+            : "MenuItems"
+        }
+        onClick={() => switchMenu(MenuOptions.ExamenesFinales)}
+      >
+        <FontAwesomeIcon className="Icon" icon={faFileAlt} />
+        <label className="LabelIcon">Exámenes Finales</label>
+      </div>
+
       {rolUsuario === 1 && (
         <div
           className={
