@@ -8,3 +8,13 @@ export function setUsuario(usuario) {
     });
   };
 }
+
+
+export function setUserLogged(usuario) {
+  return (dispatch) => {
+    dispatch({
+      type: actions.setUserLogged,
+      payload: usuario
+    });
+  };
+}

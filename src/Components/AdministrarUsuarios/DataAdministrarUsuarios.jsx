@@ -56,6 +56,7 @@ export default function DataMaterias(props) {
           <img
             src={props.usuario.imagen}
             width="100"
+            alt=""
             style={{ borderRadius: "5px", border: "3px solid rgb(150 10 10)" }}
           ></img>
         ) : (

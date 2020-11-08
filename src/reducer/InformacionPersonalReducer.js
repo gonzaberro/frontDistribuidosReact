@@ -1,8 +1,8 @@
 import { actions } from "../actions/types";
 const initialState = {
   usuario: {},
-  idRol:2,
-  idUsuario:3
+  idRol:3,
+  idUsuario:6
 };
 
 export default function (state = initialState, action) {
@@ -12,10 +12,11 @@ export default function (state = initialState, action) {
         ...state,
         usuario: action.payload,
       };
-      case actions.setRolUser:
+      case actions.setUserLogged:
       return {
         ...state,
-        idRol: action.payload,
+        idRol: action.payload.idRol,
+         idUsuario: action.payload.idUsuario,
       };
 
     default:

@@ -28,13 +28,14 @@ export default function FormInfoUsuario(props) {
   const [pais, setPais] = useState("");
   const [localidad, setLocalidad] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("1234");
+  const [password] = useState("");
   const [base64Image, setBase64Image] = useState("");
+  const [cargoInfo, setCargoInfo] = useState(false);
 
   const administrarUsuarios = useSelector((state) => state.administrarUsuarios);
 
   useEffect(() => {
-    if (administrarUsuarios.usuarioSeleccionado.nombre) {
+    if (administrarUsuarios.usuarioSeleccionado.nombre && !cargoInfo) {
       const usuario = administrarUsuarios.usuarioSeleccionado;
       setTelefono(usuario.telefono);
       setNombre(usuario.nombre);
@@ -46,6 +47,7 @@ export default function FormInfoUsuario(props) {
       setLocalidad(usuario.direccion?.localidad);
       setDireccion(usuario.direccion?.calle);
       setBase64Image(usuario.imagen);
+      setCargoInfo(true);
 
       if (usuario.rol?.id === 1) {
         setAdministrador(true);
@@ -77,24 +79,35 @@ export default function FormInfoUsuario(props) {
     }
   };
 
+  const editUser = () => {
+    const user = editarUsuario();
+    apiCalls
+      .updateUsuarioCompleto(administrarUsuarios.usuarioSeleccionado.id, user)
+      .then((response) => {
+        apiCalls
+          .getUsuarios()
+          .then((response) => {
+            dispatch(setUsuarios(response.data.data));
+            dispatch(setModal(false));
+            enqueueSnackbar("Se actualizó el usuario", {
+              variant: "success",
+            });
+          })
+          .catch((error) => {
+            enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+              variant: "error",
+            });
+          });
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
+      });
+  };
+
   const saveUser = () => {
-    const user = {
-      nombre: nombre,
-      apellido: apellido,
-      dni: documento,
-      telefono: telefono,
-      email: email,
-      password: password,
-      direccion: {
-        pais: pais,
-        provincia: provincia,
-        localidad: localidad,
-        calle: direccion,
-      },
-      imagen: base64Image,
-      primerIngreso: true,
-      idRol: (estudiante && 3) || (maestro && 2) || (administrador && 1),
-    };
+    const user = usuarioNuevo();
     apiCalls
       .createUser(user)
       .then((response) => {
@@ -120,6 +133,48 @@ export default function FormInfoUsuario(props) {
       });
   };
 
+  const editarUsuario = () => {
+    const user = {
+      nombre: nombre,
+      apellido: apellido,
+      dni: documento,
+      telefono: telefono,
+      direccion: {
+        pais: pais,
+        provincia: provincia,
+        localidad: localidad,
+        calle: direccion,
+      },
+      imagen: base64Image,
+      primerIngreso: false,
+      idRol: (estudiante && 3) || (maestro && 2) || (administrador && 1),
+    };
+
+    return user;
+  };
+
+  const usuarioNuevo = () => {
+    const user = {
+      nombre: nombre,
+      apellido: apellido,
+      dni: documento,
+      telefono: telefono,
+      email: email,
+      password: password === "" ? documento : password,
+      direccion: {
+        pais: pais,
+        provincia: provincia,
+        localidad: localidad,
+        calle: direccion,
+      },
+      imagen: base64Image,
+      primerIngreso: true,
+      idRol: (estudiante && 3) || (maestro && 2) || (administrador && 1),
+    };
+
+    return user;
+  };
+
   return (
     <>
       <Grid container className="ColumInformacionPersonal">
@@ -139,6 +194,7 @@ export default function FormInfoUsuario(props) {
             />
             <TextField
               fullWidth
+              disabled={cargoInfo}
               id="outlined-basic"
               placeholder="Email"
               variant="outlined"
@@ -255,13 +311,24 @@ export default function FormInfoUsuario(props) {
                 </Grid>
               </Grid>
             </div>
-            <Button
-              variant="contained"
-              className="ButtonNuevoUsuario"
-              onClick={saveUser}
-            >
-              Guardar Cambios
-            </Button>
+            {!cargoInfo && (
+              <Button
+                variant="contained"
+                className="ButtonNuevoUsuario"
+                onClick={saveUser}
+              >
+                Guardar Cambios
+              </Button>
+            )}
+            {cargoInfo && (
+              <Button
+                variant="contained"
+                className="ButtonNuevoUsuario"
+                onClick={editUser}
+              >
+                Guardar Cambios
+              </Button>
+            )}
           </form>
         </Grid>
       </Grid>

@@ -7,10 +7,12 @@ import {
   faFileAlt,
   faUserPlus,
   faMarker,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { selectMenu } from "../../../actions/MenuSwitchActions";
-import { MenuOptions } from "../../../actions/types";
+import { MenuOptions, loggedStates } from "../../../actions/types";
+import { setLogged } from "../../../actions/MenuSwitchActions";
 
 export default function MenuItems() {
   const disptach = useDispatch();
@@ -19,7 +21,12 @@ export default function MenuItems() {
   const switchMenu = (menuSelected) => {
     disptach(selectMenu(menuSelected));
   };
-
+  const cerrarSesion = () => {
+    localStorage.removeItem("idUsuario");
+    localStorage.removeItem("idUsuario");
+    disptach(setLogged(loggedStates.login));
+  };
+  console.log(rolUsuario);
   return (
     <div style={{ overflowY: "auto", maxHeight: "90vh" }}>
       <div
@@ -83,6 +90,17 @@ export default function MenuItems() {
           <label className="LabelIcon">Cargar Notas</label>
         </div>
       )}
+      <div
+        className={
+          menuSelected === MenuOptions.CargarNotas
+            ? "MenuItems-Selected MenuItems"
+            : "MenuItems"
+        }
+        onClick={cerrarSesion}
+      >
+        <FontAwesomeIcon className="Icon" icon={faSignOutAlt} />
+        <label className="LabelIcon">Cerrar Sesión</label>
+      </div>
     </div>
   );
 }

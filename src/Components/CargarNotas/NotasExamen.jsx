@@ -7,7 +7,7 @@ import { apiCalls } from "../../api/apiCalls";
 import { setAlumnosNotasMateriaExamen } from "../../actions/CargarNotasActions";
 import { useSnackbar } from "notistack";
 import AlumnoNotaExamenItem from "./AlumnoNotaExamenItem";
-
+import UploadNotasExamen from "./UploadNotasExamen";
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -29,21 +29,27 @@ export default function NotasExamen() {
     (state) => state.cargarNotas.alumnosNotasExamen
   );
   const alumnosExamen = (materia) => {
-    setMateria(materia);
-    apiCalls
-      .getAlumnosExamenxMateria(materia)
-      .then((response) => {
-        dispatch(setAlumnosNotasMateriaExamen(response.data.data));
-      })
-      .catch((error) => {
-        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
-          variant: "error",
+    if (materia === "") {
+      setMateria(materia);
+      dispatch(setAlumnosNotasMateriaExamen([]));
+    } else {
+      setMateria(materia);
+      apiCalls
+        .getAlumnosExamenxMateria(materia)
+        .then((response) => {
+          dispatch(setAlumnosNotasMateriaExamen(response.data.data));
+        })
+        .catch((error) => {
+          enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+            variant: "error",
+          });
         });
-      });
+    }
   };
 
   return (
     <div className="containerNotasMaterias">
+      <UploadNotasExamen />
       <FormControl fullWidth variant="outlined" className={classes.formControl}>
         <InputLabel htmlFor="outlined-age-native-simple">Materias</InputLabel>
         <Select

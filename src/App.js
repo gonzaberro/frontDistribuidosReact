@@ -1,5 +1,5 @@
 import React from "react";
-import Logged from "./Components/Logged";
+import LoginSwitch from "./Components/LoginSwitch";
 import "./App.css";
 import { Provider } from "react-redux";
 import store from "./store.js";
@@ -10,7 +10,7 @@ function App() {
   return (
     <Provider store={store}>
         <SnackbarProvider maxSnack={3}>
-      <Logged />
+      <LoginSwitch />
        </SnackbarProvider>
     </Provider>
   );

@@ -67,7 +67,7 @@ export default function FotoUpload(props) {
     return (
       <div style={thumb} key={file.name}>
         <div style={thumbInner}>
-          <img src={file.preview} style={img} />
+          <img src={file.preview} style={img} alt="" />
         </div>
       </div>
     );
@@ -100,6 +100,7 @@ export default function FotoUpload(props) {
           <img
             src={props.base64Image}
             width="100"
+            alt=""
             style={{ borderRadius: "5px", border: "3px solid rgb(150 10 10)" }}
           ></img>
         )}

@@ -22,5 +22,9 @@ export default function PageAdministrarUsuarios() {
       });
   });
 
+  useEffect(() => {
+    return () => dispatch(setUsuario({}));
+  });
+
   return <InformacionPersonal />;
 }

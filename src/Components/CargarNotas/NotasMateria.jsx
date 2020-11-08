@@ -1,19 +1,13 @@
 import React, { useState } from "react";
 import "../../Css/CargarNotas.css";
-import {
-  InputLabel,
-  Select,
-  FormControl,
-  Grid,
-  TextField,
-  Button,
-} from "@material-ui/core";
+import { InputLabel, Select, FormControl, Grid } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { apiCalls } from "../../api/apiCalls";
 import { setAlumnosNotasMateria } from "../../actions/CargarNotasActions";
 import { useSnackbar } from "notistack";
 import AlumnoNotaMateriaItem from "./AlumnoNotaMateriaItem";
+import UploadNotasMateria from "./UploadNotasMateria";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -37,21 +31,27 @@ export default function NotasMateria() {
   const dispatch = useDispatch();
 
   const alumnosMateria = (materia) => {
-    setMateria(materia);
-    apiCalls
-      .getAlumnosMateria(materia)
-      .then((response) => {
-        dispatch(setAlumnosNotasMateria(response.data.data));
-      })
-      .catch((error) => {
-        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
-          variant: "error",
+    if (materia === "") {
+      setMateria(materia);
+      dispatch(setAlumnosNotasMateria([]));
+    } else {
+      setMateria(materia);
+      apiCalls
+        .getAlumnosMateria(materia)
+        .then((response) => {
+          dispatch(setAlumnosNotasMateria(response.data.data));
+        })
+        .catch((error) => {
+          enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+            variant: "error",
+          });
         });
-      });
+    }
   };
 
   return (
     <div className="containerNotasExamen">
+      <UploadNotasMateria />
       <FormControl fullWidth variant="outlined" className={classes.formControl}>
         <InputLabel htmlFor="outlined-age-native-simple">Materias</InputLabel>
         <Select

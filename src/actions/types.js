@@ -16,7 +16,9 @@ export const actions = {
   alumnosMateria:"Alumnos Materia",
   setMateriasExamen:"Set Materias Examen",
   setAlumnosMateriaExamen:"Alumnos Materia Examen",
-  setAlumnosNotasExamen:"setAlumnosNotasExamen"
+  setAlumnosNotasExamen:"setAlumnosNotasExamen",
+  setLogged:"SetLogged",
+  setUserLogged:"setUserLogged"
 
 };
 export const MenuOptions = {
@@ -34,3 +36,9 @@ export const ModalFunctions = {
   alumnosMateria:"Alumnos Materia"
 
 };
+
+export const loggedStates = {
+  logged:"Usuario Logueado",
+  firstLogin:"Primer Inicio de Sesion",
+  login:"Login"
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Divider, Button } from "@material-ui/core";
+import { Grid, Divider } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import DatosContacto from "./DatosContacto";
 import DatosPersonales from "./DatosPersonales";
@@ -7,6 +7,7 @@ import InformeAnalitico from "./InformeAnalitico";
 import "../../Css/InformacionPersonal.css";
 export default function InformacionPersonal() {
   const informacionPersonal = useSelector((state) => state.informacionPersonal);
+  const rolUsuario = useSelector((state) => state.informacionPersonal.idRol);
 
   return (
     <div className="InformacionPersonal">
@@ -19,16 +20,12 @@ export default function InformacionPersonal() {
         </Grid>
       </Grid>
 
-      <Button
-        variant="contained"
-        color="primary"
-        className="ButtonGuardarInformacionPersonal"
-      >
-        Guardar Cambios
-      </Button>
-      <Divider variant="middle" />
-
-      <InformeAnalitico />
+      {rolUsuario === 3 && (
+        <>
+          <Divider variant="middle" />
+          <InformeAnalitico />
+        </>
+      )}
     </div>
   );
 }

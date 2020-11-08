@@ -91,6 +91,24 @@ function setCalificacionExamen(idUsuarioExamenFinal,calificacion) {
   return api.put("/usuarios-examenes-finales/calificaciones?calificacion="+calificacion+"&idUsuarioExamenFinal="+idUsuarioExamenFinal);
 }
 
+function loginUsuario(parameters) {
+  
+  return api.post("/usuarios/login",parameters);
+}
+function changePassword(parameters) {
+  
+  return api.put("/usuarios/password",parameters);
+}
+
+function updateUsuario(idUsuario,parameters) {
+  
+  return api.put("/usuarios/datos-contacto?idUsuario="+idUsuario,parameters);
+}
+function updateUsuarioCompleto(idUsuario,parameters) {
+  
+  return api.put("/usuarios?idUsuario="+idUsuario,parameters);
+}
+
 export const apiCalls = {
   getUsuarios,
   deleteUsuario,
@@ -112,5 +130,9 @@ export const apiCalls = {
   deleteMaterias,
   setCalificacionMateria,
   getAlumnosExamenxMateria,
-  setCalificacionExamen
+  setCalificacionExamen,
+  loginUsuario,
+  changePassword,
+  updateUsuario,
+  updateUsuarioCompleto
 };

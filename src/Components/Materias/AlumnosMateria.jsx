@@ -10,11 +10,11 @@ export default function AlumnosMateria() {
   );
   const alumnos = useSelector((state) => state.materiasReducer.alumnos);
   return (
-    <Grid container className="ContainerDataGrid">
+    <Grid container className="containerHeaderHorarios">
       <Grid item xs={8} sm={8} className="DataGrid">
         Alumnos Correspondientes a:<b> {materia.nombre?.toUpperCase()}</b>
       </Grid>
-      <Grid item xs={4} sm={4} className="DataGrid">
+      <Grid item xs={4} sm={4} className="DataGrid horariosHeader">
         <Button variant="contained" color="primary">
           Descargar Excel
           <FontAwesomeIcon
@@ -26,16 +26,16 @@ export default function AlumnosMateria() {
         </Button>
       </Grid>
 
-      <Grid item xs={12} sm={3} className="DataGrid">
+      <Grid item xs={12} sm={3} className="DataGrid horariosHeader">
         Nombre
       </Grid>
-      <Grid item xs={12} sm={3} className="DataGrid">
+      <Grid item xs={12} sm={3} className="DataGrid horariosHeader">
         Apellido
       </Grid>
-      <Grid item xs={12} sm={3} className="DataGrid">
+      <Grid item xs={12} sm={3} className="DataGrid horariosHeader">
         Documento
       </Grid>
-      <Grid item xs={12} sm={3} className="DataGrid">
+      <Grid item xs={12} sm={3} className="DataGrid horariosHeader">
         Email
       </Grid>
       {alumnos.length > 0 &&

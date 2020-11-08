@@ -8,3 +8,13 @@ export function selectMenu(menuSelected) {
     });
   };
 }
+
+
+export function setLogged(logged) {
+  return (dispatch) => {
+    dispatch({
+      type: actions.setLogged,
+      payload: logged,
+    });
+  };
+}

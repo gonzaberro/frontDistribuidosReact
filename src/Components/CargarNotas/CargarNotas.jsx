@@ -10,14 +10,14 @@ export default function CargarNotas() {
       <Grid container>
         <Grid item md={5}>
           <label className="headerCargarNotas">
-            <h2>Cargar notas de Materias</h2>
+            <h3>Cargar notas de Materias</h3>
           </label>
           <NotasMateria />
         </Grid>
         <Grid md={1}></Grid>
         <Grid item md={5}>
           <label className="headerCargarNotas">
-            <h2>Cargar notas de Exámenes</h2>
+            <h3>Cargar notas de Exámenes</h3>
           </label>
           <NotasExamen />
         </Grid>

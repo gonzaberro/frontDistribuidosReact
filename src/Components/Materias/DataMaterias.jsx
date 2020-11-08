@@ -151,7 +151,7 @@ export default function DataMaterias(props) {
   return (
     <Grid container className="ContainerDataGrid">
       <Grid item xs={12} sm={3} className="DataGrid">
-        {props.materia?.nombre}
+        {props.materia?.nombre.toUpperCase()}
       </Grid>
       <Grid item xs={12} sm={3} className="DataGrid">
         {props.materia?.profesor?.nombre} {props.materia?.profesor?.apellido}
