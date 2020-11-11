@@ -4,8 +4,12 @@ import "../../Css/InformacionPersonal.css";
 import { useSnackbar } from "notistack";
 import { apiCalls } from "../../api/apiCalls";
 import FotoUpload from "../AdministrarUsuarios/FotoUpload";
+import { useDispatch, useSelector } from "react-redux";
+import { setUsuario } from "../../actions/InformacionPersonal";
 
 export default function DatosContacto(props) {
+  const idUsuario = useSelector((state) => state.informacionPersonal.idUsuario);
+  const dispatch = useDispatch();
   const [telefono, setTelefono] = useState();
   const [email, setEmail] = useState();
   const [direccion, setDireccion] = useState();
@@ -43,9 +47,19 @@ export default function DatosContacto(props) {
         imagen: base64Image,
       })
       .then((response) => {
-        enqueueSnackbar("Se actualizaron tus datos de contacto", {
-          variant: "success",
-        });
+        apiCalls
+          .getUsuario(idUsuario)
+          .then((response) => {
+            enqueueSnackbar("Se actualizaron tus datos de contacto", {
+              variant: "success",
+            });
+            dispatch(setUsuario(response.data.data));
+          })
+          .catch((error) => {
+            enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+              variant: "error",
+            });
+          });
       })
       .catch((error) => {
         enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
@@ -91,7 +105,7 @@ export default function DatosContacto(props) {
           <TextField
             fullWidth
             id="outlined-basic"
-            placeholder="Dirección"
+            placeholder="Localidad"
             variant="outlined"
             className="InputsDato"
             value={localidad}
@@ -100,7 +114,7 @@ export default function DatosContacto(props) {
           <TextField
             fullWidth
             id="outlined-basic"
-            placeholder="Dirección"
+            placeholder="Provincia"
             variant="outlined"
             className="InputsDato"
             value={provincia}
@@ -109,7 +123,7 @@ export default function DatosContacto(props) {
           <TextField
             fullWidth
             id="outlined-basic"
-            placeholder="Dirección"
+            placeholder="País"
             variant="outlined"
             className="InputsDato"
             value={pais}

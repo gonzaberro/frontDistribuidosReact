@@ -3,7 +3,8 @@ import { actions } from "../actions/types";
 const initialState = {
   examenes: [],
   searchField:"",
-  materias:[]
+  materias:[],
+  examenSeleccionado:{}
 };
 
 export default function (state = initialState, action) {
@@ -23,6 +24,11 @@ export default function (state = initialState, action) {
         ...state,
         materias: action.payload,
       };
+      case actions.seleccionarExamen:
+      return {
+        ...state,
+        examenSeleccionado:action.payload
+      }
     
 
     default:

@@ -3,14 +3,19 @@ import { Grid, Button } from "@material-ui/core";
 import "../../Css/ExamenesFinales.css";
 import { useSelector, useDispatch } from "react-redux";
 import { apiCalls } from "../../api/apiCalls";
-import { setExamenesUsuario } from "../../actions/ExamenesActions";
+import {
+  setExamenesUsuario,
+  setExamen,
+  setMateriasExamen,
+} from "../../actions/ExamenesActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBellSlash, faBell } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 import { useSnackbar } from "notistack";
 import audio from "../../audio/iphone.mp3";
 import useSound from "use-sound";
-import { apiUrl } from "../../api/api";
+import { apiDocentes as apiUrl } from "../../api/api";
+import { setModal } from "../../actions/ModalActions";
 
 export default function DataExamenesFinales(props) {
   const { enqueueSnackbar } = useSnackbar();
@@ -146,6 +151,21 @@ export default function DataExamenesFinales(props) {
     }
   };
 
+  const editarExamen = () => {
+    apiCalls
+      .getMaterias()
+      .then((response) => {
+        dispatch(setMateriasExamen(response.data.data));
+        dispatch(setExamen(props.examen));
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
+      });
+    dispatch(setModal(true));
+  };
+
   const setReminder = () => {
     setTipoBell(tipoBell === faBellSlash ? faBell : faBellSlash);
     apiCalls
@@ -202,13 +222,19 @@ export default function DataExamenesFinales(props) {
       <Grid item xs={12} sm={3} className="DataGrid">
         {rolUsuario === 3 && <ActionsEstudiante />}
         {rolUsuario === 1 && (
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={eliminarExamen}
-          >
-            Eliminar Examen
-          </Button>
+          <>
+            <Button variant="contained" color="primary" onClick={editarExamen}>
+              Editar
+            </Button>
+            <Button
+              style={{ marginLeft: "10px" }}
+              variant="contained"
+              color="secondary"
+              onClick={eliminarExamen}
+            >
+              Eliminar
+            </Button>
+          </>
         )}
         {rolUsuario === 2 && (
           <Button variant="contained" color="secondary" onClick={alumnosExcel}>

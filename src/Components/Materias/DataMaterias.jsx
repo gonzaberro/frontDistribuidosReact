@@ -148,9 +148,15 @@ export default function DataMaterias(props) {
     }
   };
 
+  const editarMateria = () => {
+    dispatch(modalFunction(ModalFunctions.nuevaMateria));
+    dispatch(setMateriaSeleccionada(props.materia));
+    dispatch(setModal(true));
+  };
+
   return (
     <Grid container className="ContainerDataGrid">
-      <Grid item xs={12} sm={3} className="DataGrid">
+      <Grid item xs={12} sm={2} className="DataGrid">
         {props.materia?.nombre.toUpperCase()}
       </Grid>
       <Grid item xs={12} sm={3} className="DataGrid">
@@ -165,31 +171,37 @@ export default function DataMaterias(props) {
       <Grid item xs={12} sm={1} className="DataGrid">
         <Button
           variant="contained"
-          color="primary"
+          color="default"
           onClick={() => showHorarios(props.materia)}
         >
           Horarios
         </Button>
       </Grid>
-      <Grid item xs={12} sm={2} className="DataGrid">
+      <Grid item xs={12} sm={3} className="DataGrid">
         {rolUsuario === 3 && <ActionsEstudiante />}
         {rolUsuario === 2 && (
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={() => verAlumnos(props.materia)}
           >
             Ver Alumnos
           </Button>
         )}
         {rolUsuario === 1 && (
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={eliminarMateria}
-          >
-            Eliminar Materia
-          </Button>
+          <>
+            <Button variant="contained" color="primary" onClick={editarMateria}>
+              Editar
+            </Button>
+            <Button
+              style={{ marginLeft: "10px" }}
+              variant="contained"
+              color="secondary"
+              onClick={eliminarMateria}
+            >
+              Eliminar
+            </Button>
+          </>
         )}
       </Grid>
     </Grid>

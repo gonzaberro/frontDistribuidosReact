@@ -7,7 +7,7 @@ import { setModal, modalFunction } from "../../actions/ModalActions";
 import { ModalFunctions } from "../../actions/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import { apiUrl } from "../../api/api";
+import { apiAdmin as apiUrl } from "../../api/api";
 
 export default function ToolBarMaterias() {
   const rolUsuario = useSelector((state) => state.informacionPersonal.idRol);

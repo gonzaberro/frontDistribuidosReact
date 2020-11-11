@@ -11,7 +11,7 @@ import { apiCalls } from "../../api/apiCalls";
 import { useSnackbar } from "notistack";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import { apiUrl } from "../../api/api";
+import { apiAdmin as apiUrl } from "../../api/api";
 
 export default function ToolBarExamenesFinales() {
   const { enqueueSnackbar } = useSnackbar();

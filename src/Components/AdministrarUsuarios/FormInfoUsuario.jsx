@@ -186,6 +186,7 @@ export default function FormInfoUsuario(props) {
             <TextField
               fullWidth
               id="outlined-basic"
+              label="Teléfono"
               placeholder="Teléfono"
               variant="outlined"
               className="InputsDato"
@@ -196,6 +197,7 @@ export default function FormInfoUsuario(props) {
               fullWidth
               disabled={cargoInfo}
               id="outlined-basic"
+              label="Email"
               placeholder="Email"
               variant="outlined"
               className="InputsDato"
@@ -205,6 +207,7 @@ export default function FormInfoUsuario(props) {
             <TextField
               fullWidth
               id="outlined-basic"
+              label="Dirección"
               placeholder="Dirección"
               variant="outlined"
               className="InputsDato"
@@ -214,7 +217,8 @@ export default function FormInfoUsuario(props) {
             <TextField
               fullWidth
               id="outlined-basic"
-              placeholder="Pais"
+              label="País"
+              placeholder="País"
               variant="outlined"
               className="InputsDato"
               value={pais}
@@ -223,6 +227,7 @@ export default function FormInfoUsuario(props) {
             <TextField
               fullWidth
               id="outlined-basic"
+              label="Provincia"
               placeholder="Provincia"
               variant="outlined"
               className="InputsDato"
@@ -232,6 +237,7 @@ export default function FormInfoUsuario(props) {
             <TextField
               fullWidth
               id="outlined-basic"
+              label="Localidad"
               placeholder="Localidad"
               variant="outlined"
               className="InputsDato"
@@ -246,6 +252,7 @@ export default function FormInfoUsuario(props) {
             <TextField
               fullWidth
               id="outlined-basic"
+              label="Nombre"
               placeholder="Nombre"
               variant="outlined"
               className="InputsDato"
@@ -255,6 +262,7 @@ export default function FormInfoUsuario(props) {
             <TextField
               fullWidth
               id="outlined-basic"
+              label="Apellido"
               placeholder="Apellido"
               variant="outlined"
               className="InputsDato"
@@ -264,6 +272,7 @@ export default function FormInfoUsuario(props) {
             <TextField
               fullWidth
               id="outlined-basic"
+              label="Documento"
               placeholder="Documento"
               variant="outlined"
               className="InputsDato"

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Grid, Button } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import { apiUrl } from "../../api/api";
+import { apiDocentes as apiUrl } from "../../api/api";
 
 export default function AlumnosMateria() {
   const materia = useSelector(

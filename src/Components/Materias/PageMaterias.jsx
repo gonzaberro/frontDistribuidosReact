@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Materias from "./Materias";
 import { apiCalls } from "../../api/apiCalls";
-import { setMateriasUsuario, setDocentes } from "../../actions/MateriasActions";
+import {
+  setMateriasUsuario,
+  setDocentes,
+  setMateriaSeleccionada,
+} from "../../actions/MateriasActions";
 import { setModal } from "../../actions/ModalActions";
 import FormMateria from "./FormMateria";
 import Modal from "@material-ui/core/Modal";
@@ -45,6 +49,7 @@ export default function PageMaterias() {
 
   const handleClose = () => {
     dispatch(setModal(false));
+    dispatch(setMateriaSeleccionada({}));
   };
 
   return (

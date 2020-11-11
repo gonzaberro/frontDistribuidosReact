@@ -3,7 +3,7 @@ import { Grid, Button } from "@material-ui/core";
 import "../../Css/InformacionPersonal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import { apiUrl } from "../../api/api";
+import { apiEstudiantes as apiUrl } from "../../api/api";
 import { useSelector } from "react-redux";
 
 export default function InformeAnalitico() {

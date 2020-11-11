@@ -18,7 +18,8 @@ export const actions = {
   setAlumnosMateriaExamen:"Alumnos Materia Examen",
   setAlumnosNotasExamen:"setAlumnosNotasExamen",
   setLogged:"SetLogged",
-  setUserLogged:"setUserLogged"
+  setUserLogged:"setUserLogged",
+  seleccionarExamen:"Seleccionar Examen"
 
 };
 export const MenuOptions = {

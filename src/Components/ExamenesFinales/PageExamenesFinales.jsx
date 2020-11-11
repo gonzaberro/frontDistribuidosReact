@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ExamenesFinales from "./ExamenesFinales";
 import { apiCalls } from "../../api/apiCalls";
-import { setExamenesUsuario } from "../../actions/ExamenesActions";
+import { setExamenesUsuario, setExamen } from "../../actions/ExamenesActions";
 import { setModal } from "../../actions/ModalActions";
 import Modal from "@material-ui/core/Modal";
 import FormExamen from "./FormExamen";
@@ -28,6 +28,7 @@ export default function PageMaterias() {
   });
 
   const handleClose = () => {
+    dispatch(setExamen({}));
     dispatch(setModal(false));
   };
 

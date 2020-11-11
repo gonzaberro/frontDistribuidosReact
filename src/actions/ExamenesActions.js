@@ -27,3 +27,13 @@ export function setMateriasExamen(materias) {
   };
 }
 
+
+export function setExamen(examen) {
+  return (dispatch) => {
+    dispatch({
+      type: actions.seleccionarExamen,
+      payload: examen
+    });
+  };
+}
+

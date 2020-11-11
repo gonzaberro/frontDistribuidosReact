@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { apiCalls } from "../../api/apiCalls";
-import { setMateriasUsuario } from "../../actions/MateriasActions";
+import {
+  setMateriasUsuario,
+  setMateriaSeleccionada,
+} from "../../actions/MateriasActions";
 import { setModal } from "../../actions/ModalActions";
 import { useSnackbar } from "notistack";
 
@@ -29,7 +32,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FormMateria(props) {
   const { enqueueSnackbar } = useSnackbar();
-
+  const materia = useSelector(
+    (state) => state.materiasReducer.materiaSeleccionada
+  );
   const classes = useStyles();
   const dispatch = useDispatch();
   const docentes = useSelector((state) => state.materiasReducer.docentes);
@@ -50,8 +55,50 @@ export default function FormMateria(props) {
   const [jueves, setJueves] = useState(false);
   const [viernes, setViernes] = useState(false);
   const [sabado, setSabado] = useState(false);
+  const [cargoInfo, setCargoInfo] = useState(false);
 
-  const guardarMateria = () => {
+  useEffect(() => {
+    if (materia.id && !cargoInfo) {
+      setTurno(materia.turno.id);
+      setDocente(materia.profesor.id);
+      setFechaFinInscripcion(materia.periodoInscripcion.fechaHasta);
+      setFechaInicioInscripcion(materia.periodoInscripcion.fechaDesde);
+      setFechaNotas(materia.periodoInscripcion.fechaLimiteNota);
+      setNombre(materia.nombre);
+      setCuatrimestre(materia.cuatrimestre);
+      setAnioCarrera(materia.anioCarrera);
+
+      materia.dias.forEach((dia) => setDiaTrue(dia.id));
+
+      setCargoInfo(true);
+    }
+  });
+
+  const setDiaTrue = (dia) => {
+    console.log(dia);
+    switch (dia) {
+      case 1:
+        setLunes(true);
+        break;
+      case 2:
+        setMartes(true);
+        break;
+      case 3:
+        setMiercoles(true);
+        break;
+      case 4:
+        setJueves(true);
+        break;
+      case 5:
+        setViernes(true);
+        break;
+      case 6:
+        setSabado(true);
+        break;
+    }
+  };
+
+  const editarMateria = () => {
     const diasCursada = [];
 
     if (lunes) diasCursada.push(1);
@@ -61,7 +108,7 @@ export default function FormMateria(props) {
     if (viernes) diasCursada.push(5);
     if (sabado) diasCursada.push(6);
 
-    const materia = {
+    const editMateria = {
       nombre: nombre,
       idProfesor: docente,
       cuatrimestre: cuatrimestre,
@@ -75,13 +122,62 @@ export default function FormMateria(props) {
       dias: diasCursada,
     };
     apiCalls
-      .createMateria(materia)
+      .editarMateria(materia.id, editMateria)
       .then((response) => {
         apiCalls
           .getUsuarios()
           .then((response) => {
             dispatch(setMateriasUsuario(response.data.data));
             dispatch(setModal(false));
+            enqueueSnackbar("Se guardaron los cambios de la materia", {
+              variant: "success",
+            });
+          })
+          .catch((error) => {
+            enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+              variant: "error",
+            });
+          });
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
+      });
+  };
+
+  const guardarMateria = () => {
+    const diasCursada = [];
+
+    if (lunes) diasCursada.push(1);
+    if (martes) diasCursada.push(2);
+    if (miercoles) diasCursada.push(3);
+    if (jueves) diasCursada.push(4);
+    if (viernes) diasCursada.push(5);
+    if (sabado) diasCursada.push(6);
+
+    const nuevaMateria = {
+      nombre: nombre,
+      idProfesor: docente,
+      cuatrimestre: cuatrimestre,
+      anioCarrera: anioCarrera,
+      idTurno: turno,
+      periodoInscripcion: {
+        fechaDesde: fechaInicioInscripcion,
+        fechaHasta: fechaFinInscripcion,
+        fechaLimiteNota: fechaNotas,
+      },
+      dias: diasCursada,
+    };
+    apiCalls
+      .createMateria(nuevaMateria)
+      .then((response) => {
+        apiCalls
+          .getUsuarios()
+          .then((response) => {
+            dispatch(setMateriasUsuario(response.data.data));
+            dispatch(setModal(false));
+            dispatch(setMateriaSeleccionada({}));
             enqueueSnackbar("Se creó la materia", {
               variant: "success",
             });
@@ -110,6 +206,7 @@ export default function FormMateria(props) {
             <TextField
               fullWidth
               id="outlined-basic"
+              label="Nombre"
               placeholder="Nombre"
               variant="outlined"
               className="InputsDato"
@@ -119,6 +216,7 @@ export default function FormMateria(props) {
             <TextField
               fullWidth
               id="outlined-basic"
+              label="Nro Cuatrimestre"
               placeholder="Cuatrimestre"
               variant="outlined"
               className="InputsDato"
@@ -129,6 +227,7 @@ export default function FormMateria(props) {
               fullWidth
               id="outlined-basic"
               placeholder="Año de Carrera"
+              label="Año de Carrera"
               variant="outlined"
               className="InputsDato"
               value={anioCarrera}
@@ -283,13 +382,23 @@ export default function FormMateria(props) {
                 />
               </Grid>
             </Grid>
-            <Button
-              variant="contained"
-              className="ButtonNuevoUsuario"
-              onClick={guardarMateria}
-            >
-              Guardar Cambios
-            </Button>
+            {materia.id ? (
+              <Button
+                variant="contained"
+                className="ButtonNuevoUsuario"
+                onClick={editarMateria}
+              >
+                Guardar Cambios
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                className="ButtonNuevoUsuario"
+                onClick={guardarMateria}
+              >
+                Guardar Cambios
+              </Button>
+            )}
           </form>
         </Grid>
       </Grid>

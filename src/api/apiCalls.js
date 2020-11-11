@@ -1,123 +1,135 @@
-import api from "./api";
+import {apiAdmin,apiDocentes,apiEstudiantes} from "./api";
 
 function getUsuarios() {
-  return api.get("/usuarios/all");
+  return apiAdmin.get("/usuarios/all");
 }
 function getUsuario(idUsuario) {
-  return api.get("/usuarios?idUsuario="+idUsuario);
+  return apiAdmin.get("/usuarios?idUsuario="+idUsuario);
 }
 function deleteUsuario(idUsuario) {
   
-  return api.delete("/usuarios?idUsuario="+idUsuario);
+  return apiAdmin.delete("/usuarios?idUsuario="+idUsuario);
 }
 
 function deleteInscripcionExamen(id) {
   
-  return api.delete("/usuarios-examenes-finales?idUsuarioExamenFinal="+id);
+  return apiAdmin.delete("/usuarios-examenes-finales?idUsuarioExamenFinal="+id);
 }
 
 function deleteInscripcionMateria(id) {
   
-  return api.delete("/usuarios-materias?idUsuarioMateria="+id);
+  return apiAdmin.delete("/usuarios-materias?idUsuarioMateria="+id);
 }
 function deleteMaterias(id) {
   
-  return api.delete("/materias?idMateria="+id);
+  return apiAdmin.delete("/materias?idMateria="+id);
 }
 function deleteExamenes(id) {
   
-  return api.delete("/finales?idExamenFinal="+id);
+  return apiAdmin.delete("/finales?idExamenFinal="+id);
 }
 
 function getMateriasUsuario(idUsuario) {
   
-  return api.get("/usuarios-materias/materias-inscriptas?idUsuario="+idUsuario);
+  return apiAdmin.get("/usuarios-materias/materias-inscriptas?idUsuario="+idUsuario);
 }
 function getExamenesUsuario(idUsuario) {
   
-  return api.get("/usuarios-examenes-finales/finales-inscriptos?idUsuario="+idUsuario);
+  return apiAdmin.get("/usuarios-examenes-finales/finales-inscriptos?idUsuario="+idUsuario);
 }
 
 
 function inscribirMateria(parametros) {
   
-  return api.post("/usuarios-materias",parametros);
+  return apiEstudiantes.post("/usuarios-materias",parametros);
 }
 
 function inscribirExamen(parametros) {
   
-  return api.post("/usuarios-examenes-finales",parametros);
+  return apiEstudiantes.post("/usuarios-examenes-finales",parametros);
 }
 function setReminderExamen(id,recordatorio) {
   
-  return api.put("/usuarios-examenes-finales/recordatorio?idUsuarioExamenFinal="+id+"&recordatorio="+recordatorio);
+  return apiEstudiantes.put("/usuarios-examenes-finales/recordatorio?idUsuarioExamenFinal="+id+"&recordatorio="+recordatorio);
 }
 
 function createUser(parametros) {
   
-  return api.post("/usuarios",parametros);
+  return apiAdmin.post("/usuarios",parametros);
 }
 function createMateria(parametros) {
   
-  return api.post("/materias",parametros);
+  return apiAdmin.post("/materias",parametros);
 }
 function createExamen(parametros) {
   
-  return api.post("/finales",parametros);
+  return apiAdmin.post("/finales",parametros);
 }
 function getDocentes() {
   
-  return api.get("/usuarios/docentes");
+  return apiAdmin.get("/usuarios/docentes");
 }
 
 function getAlumnosMateria(materia) {
   
-  return api.get("/usuarios-materias/alumnos?idMateria="+materia);
+  return apiDocentes.get("/usuarios-materias/alumnos?idMateria="+materia);
 }
 function getAlumnosExamenxMateria(materia) {
   
-  return api.get("/usuarios-examenes-finales/alumnos?idMateria="+materia);
+  return apiDocentes.get("/usuarios-examenes-finales/alumnos?idMateria="+materia);
 }
 function getMaterias() {
   
-  return api.get("/materias/all");
+  return apiAdmin.get("/materias/all");
 }
 function setCalificacionMateria(idMateriaUsuario,calificacion,notaTp) {
   
-  return api.put("/usuarios-materias/calificaciones?calificacionExamen="+calificacion+"&calificacionTps="+notaTp+"&idUsuarioMateria="+idMateriaUsuario);
+  return apiDocentes.put("/usuarios-materias/calificaciones?calificacionExamen="+calificacion+"&calificacionTps="+notaTp+"&idUsuarioMateria="+idMateriaUsuario);
 }
 function setCalificacionExamen(idUsuarioExamenFinal,calificacion) {
   
-  return api.put("/usuarios-examenes-finales/calificaciones?calificacion="+calificacion+"&idUsuarioExamenFinal="+idUsuarioExamenFinal);
+  return apiDocentes.put("/usuarios-examenes-finales/calificaciones?calificacion="+calificacion+"&idUsuarioExamenFinal="+idUsuarioExamenFinal);
 }
 
 function loginUsuario(parameters) {
   
-  return api.post("/usuarios/login",parameters);
+  return apiAdmin.post("/usuarios/login",parameters);
 }
 function changePassword(parameters) {
   
-  return api.put("/usuarios/password",parameters);
+  return apiAdmin.put("/usuarios/password",parameters);
 }
 
 function updateUsuario(idUsuario,parameters) {
   
-  return api.put("/usuarios/datos-contacto?idUsuario="+idUsuario,parameters);
+  return apiAdmin.put("/usuarios/datos-contacto?idUsuario="+idUsuario,parameters);
 }
 function updateUsuarioCompleto(idUsuario,parameters) {
   
-  return api.put("/usuarios?idUsuario="+idUsuario,parameters);
+  return apiAdmin.put("/usuarios?idUsuario="+idUsuario,parameters);
 }
 
 function updateNotasMateria(parameters) {
   
-  return api.put("/usuarios-materias/notas-excel",parameters);
+  return apiDocentes.put("/usuarios-materias/notas-excel",parameters);
 }
 
 function updateNotasExamen(parameters) {
   
-  return api.put("/usuarios-examenes-finales/notas-excel",parameters);
+  return apiDocentes.put("/usuarios-examenes-finales/notas-excel",parameters);
 }
+
+function editarMateria(idMateria,parameters) {
+  
+  return apiAdmin.put("/materias?idMateria="+idMateria,parameters);
+}
+
+
+function editarExamen(idExamen,parameters) {
+  
+  return apiAdmin.put("/finales?idExamenFinal="+idExamen,parameters);
+}
+
 
 
 export const apiCalls = {
@@ -147,5 +159,7 @@ export const apiCalls = {
   updateUsuario,
   updateUsuarioCompleto,
   updateNotasMateria,
-  updateNotasExamen
+  updateNotasExamen,
+  editarMateria,
+  editarExamen
 };

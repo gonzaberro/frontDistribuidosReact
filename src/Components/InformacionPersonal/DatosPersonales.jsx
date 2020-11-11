@@ -85,6 +85,7 @@ export default function DatosPersonales(props) {
             value={newPassword}
             onChange={(event) => setNewPassword(event.target.value)}
           />
+
           <TextField
             fullWidth
             type="password"
