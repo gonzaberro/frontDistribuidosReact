@@ -14,7 +14,7 @@ export default function AlumnosMateria() {
   const alumnosExcel = () => {
     window.open(
       apiUrl +
-        "/modulo-admin/usuarios-materias/notas-excel?idMateria=" +
+        "/modulo-docente/usuarios-materias/notas-excel?idMateria=" +
         materia.id,
       "_blank"
     );

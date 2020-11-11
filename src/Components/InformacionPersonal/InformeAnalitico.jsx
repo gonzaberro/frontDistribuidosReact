@@ -11,7 +11,9 @@ export default function InformeAnalitico() {
 
   const planillaMaterias = () => {
     window.open(
-      apiUrl + "/modulo-admin/usuarios/analitico-pdf?idUsuario=" + idUsuario,
+      apiUrl +
+        "/modulo-estudiante/usuarios/analitico-pdf?idUsuario=" +
+        idUsuario,
       "_blank"
     );
   };

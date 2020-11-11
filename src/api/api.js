@@ -14,7 +14,7 @@ export const apiAdmin = axios.create({
 });
 
 export const apiDocentes = axios.create({
-  baseURL: apiUrlDocente+"/modulo-admin",
+  baseURL: apiUrlDocente+"/modulo-docente",
   timeout: 10000000,
   responseType: "json",
   headers: {
@@ -24,7 +24,7 @@ export const apiDocentes = axios.create({
 
 
 export const apiEstudiantes = axios.create({
-  baseURL: apiUrlEstudiante+"/modulo-admin",
+  baseURL: apiUrlEstudiante+"/modulo-estudiante",
   timeout: 10000000,
   responseType: "json",
   headers: {

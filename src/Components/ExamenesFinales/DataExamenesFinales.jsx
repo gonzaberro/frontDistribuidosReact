@@ -114,7 +114,7 @@ export default function DataExamenesFinales(props) {
   const alumnosExcel = () => {
     window.open(
       apiUrl +
-        "/modulo-admin/usuarios-examenes-finales/notas-excel?idMateria=" +
+        "/modulo-docente/usuarios-examenes-finales/notas-excel?idMateria=" +
         props.examen?.materia?.id,
       "_blank"
     );
