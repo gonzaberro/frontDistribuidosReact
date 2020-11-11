@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import { useSnackbar } from "notistack";
 import audio from "../../audio/iphone.mp3";
 import useSound from "use-sound";
-import { apiDocentes as apiUrl } from "../../api/api";
+import { apiUrlDocente as apiUrl } from "../../api/api";
 import { setModal } from "../../actions/ModalActions";
 
 export default function DataExamenesFinales(props) {

@@ -7,7 +7,7 @@ import { setModal, modalFunction } from "../../actions/ModalActions";
 import { ModalFunctions } from "../../actions/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import { apiAdmin as apiUrl } from "../../api/api";
+import { apiUrlAdmin } from "../../api/api";
 
 export default function ToolBarMaterias() {
   const rolUsuario = useSelector((state) => state.informacionPersonal.idRol);
@@ -15,7 +15,10 @@ export default function ToolBarMaterias() {
   const dispatch = useDispatch();
 
   const planillaMaterias = () => {
-    window.open(apiUrl + "/modulo-admin/materias/cuatrimestres-pdf", "_blank");
+    window.open(
+      apiUrlAdmin + "/modulo-admin/materias/cuatrimestres-pdf",
+      "_blank"
+    );
   };
 
   const _handleKeyDown = (e) => {
