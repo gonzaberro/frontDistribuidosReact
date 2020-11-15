@@ -90,14 +90,7 @@ export default function MenuItems() {
           <label className="LabelIcon">Cargar Notas</label>
         </div>
       )}
-      <div
-        className={
-          menuSelected === MenuOptions.CargarNotas
-            ? "MenuItems-Selected MenuItems"
-            : "MenuItems"
-        }
-        onClick={cerrarSesion}
-      >
+      <div className="MenuItems" onClick={cerrarSesion}>
         <FontAwesomeIcon className="Icon" icon={faSignOutAlt} />
         <label className="LabelIcon">Cerrar Sesión</label>
       </div>

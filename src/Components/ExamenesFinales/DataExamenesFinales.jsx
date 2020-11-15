@@ -194,7 +194,7 @@ export default function DataExamenesFinales(props) {
   return (
     <Grid container className="ContainerDataGrid">
       <Grid item xs={12} sm={2} className="DataGrid">
-        {props.examen?.inscripto && (
+        {props.examen?.inscripto && rolUsuario === 3 && (
           <FontAwesomeIcon
             className="IconMateriaOn"
             icon={tipoBell}

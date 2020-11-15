@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const apiUrlAdmin = "http://localhost:8080";
-export const apiUrlDocente = "http://localhost:8081";
-export const apiUrlEstudiante = "http://localhost:8082";
+export const apiUrlAdmin = "http://localhost:8090";
+export const apiUrlDocente = "http://localhost:8091";
+export const apiUrlEstudiante = "http://localhost:8092";
 
 export const apiAdmin = axios.create({
   baseURL: apiUrlAdmin+"/modulo-admin",
