@@ -121,7 +121,7 @@ export default function DataExamenesFinales(props) {
   };
 
   const ActionsEstudiante = () => {
-    if (periodoInscripcionValido()) {
+    if (periodoInscripcionValido() && props.examen?.calificacion === 0) {
       if (!props.examen?.inscripto) {
         return (
           <Button

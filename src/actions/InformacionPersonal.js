@@ -18,3 +18,11 @@ export function setUserLogged(usuario) {
     });
   };
 }
+export function setAnaliticoUsuario(analitico) {
+  return (dispatch) => {
+    dispatch({
+      type: actions.analiticoUsuario,
+      payload: analitico
+    });
+  };
+}

@@ -7,6 +7,7 @@ import MateriasReducer from "./MateriasReducer"
 import ModalReducer from "./ModalReducer"
 import ExamenesReducer from "./ExamenesReducer"
 import CargarNotasReducer from "./CargarNotasReducer"
+import InscripcionesReducer from "./InscripcionesReducer"
 //combino los states de los reducers en 1 solo para poder accederlo desde los componentes
 export default combineReducers({
   menuSelected: MenuSwitchReducer,
@@ -15,5 +16,6 @@ export default combineReducers({
   modalReducer: ModalReducer,
   materiasReducer:MateriasReducer,
   examenesReducer:ExamenesReducer,
-  cargarNotas:CargarNotasReducer
+  cargarNotas:CargarNotasReducer,
+  inscripciones:InscripcionesReducer
 });

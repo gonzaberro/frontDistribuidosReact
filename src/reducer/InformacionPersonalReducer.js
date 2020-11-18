@@ -1,6 +1,7 @@
 import { actions } from "../actions/types";
 const initialState = {
   usuario: {},
+  analiticoUsuario:[],
   idRol:3,
   idUsuario:6
 };
@@ -17,6 +18,11 @@ export default function (state = initialState, action) {
         ...state,
         idRol: action.payload.idRol,
          idUsuario: action.payload.idUsuario,
+      };
+       case actions.analiticoUsuario:
+      return {
+        ...state,
+         analiticoUsuario: action.payload,
       };
 
     default:

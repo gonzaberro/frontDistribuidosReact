@@ -118,7 +118,11 @@ export default function DataMaterias(props) {
   };
 
   const ActionsEstudiante = () => {
-    if (periodoInscripcionValido()) {
+    if (
+      periodoInscripcionValido() &&
+      props.materia?.calificacion_examen === 0 &&
+      props.materia?.calificacion_tp === 0
+    ) {
       if (!props.materia?.inscripto) {
         return (
           <Button

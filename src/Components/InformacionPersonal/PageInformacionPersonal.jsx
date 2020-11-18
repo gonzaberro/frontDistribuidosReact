@@ -4,11 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUsuario } from "../../actions/InformacionPersonal";
 import { apiCalls } from "../../api/apiCalls";
 import { useSnackbar } from "notistack";
+import { setModal } from "../../actions/ModalActions";
+import Modal from "@material-ui/core/Modal";
+import AnaliticoAlumno from "./AnaliticoAlumno";
 
 export default function PageAdministrarUsuarios() {
   const dispatch = useDispatch();
+  const open_modal = useSelector((state) => state.modalReducer.open_modal);
+
   const idUsuario = useSelector((state) => state.informacionPersonal.idUsuario);
   const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
     apiCalls
       .getUsuario(idUsuario)
@@ -25,6 +31,33 @@ export default function PageAdministrarUsuarios() {
   useEffect(() => {
     return () => dispatch(setUsuario({}));
   });
+  const handleClose = () => {
+    dispatch(setModal(false));
+  };
 
-  return <InformacionPersonal />;
+  return (
+    <>
+      <InformacionPersonal />
+      <Modal
+        open={open_modal ? true : false}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        style={{ zIndex: 11000 }}
+      >
+        <div
+          style={{
+            backgroundColor: "#fff",
+            margin: 20,
+            minHeight: "50vh",
+            maxWidth: "40vw",
+            marginLeft: "30%",
+          }}
+          className="modalBackGround"
+        >
+          <AnaliticoAlumno />
+        </div>
+      </Modal>
+    </>
+  );
 }

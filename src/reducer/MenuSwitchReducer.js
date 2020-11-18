@@ -2,7 +2,7 @@ import { actions, MenuOptions,loggedStates } from "../actions/types";
 
 const initialState = {
   isLogged:loggedStates.login,
-  menuSelected: MenuOptions.ExamenesFinales,
+  menuSelected: MenuOptions.InformacionPersonal,
 };
 
 export default function (state = initialState, action) {

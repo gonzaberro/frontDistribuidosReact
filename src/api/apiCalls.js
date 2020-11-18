@@ -130,6 +130,32 @@ function editarExamen(idExamen,parameters) {
   return apiAdmin.put("/finales?idExamenFinal="+idExamen,parameters);
 }
 
+function getAnaliticoUsuario(idUsuario) {
+  
+  return apiEstudiantes.get("/usuarios/analitico?idUsuario="+idUsuario);
+}
+function getAlumnosMateriaInscripcion(idMateria) {
+  
+  return apiAdmin.get("/usuarios-materias/alumnos?idMateria="+idMateria);
+}
+function getAlumnosExamenInscripcion(idMateria) {
+  
+  return apiAdmin.get("/usuarios-examenes-finales/alumnos?idMateria="+idMateria);
+}
+function setInscribirAlumnoMateria(idMateria,idUsuario){
+  return apiAdmin.post("/usuarios-materias?idUsuario="+idUsuario+"&idMateria="+idMateria);
+}
+function setInscribirAlumnoExamen(idExamenFinal,idUsuario){
+  return apiAdmin.post("/usuarios-examenes-finales?idUsuario="+idUsuario+"&idExamenFinal="+idExamenFinal);
+}
+function deleteInscripcionMateriaAdmin(idUsuarioMateria){
+  return apiAdmin.delete("/usuarios-materias/admin?idUsuarioMateria="+idUsuarioMateria);
+}
+function deleteInscripcionExamenAdmin(idUsuarioExamenFinal){
+  return apiAdmin.delete("/usuarios-examenes-finales/admin?idUsuarioExamenFinal="+idUsuarioExamenFinal);
+}
+
+
 
 
 export const apiCalls = {
@@ -161,5 +187,12 @@ export const apiCalls = {
   updateNotasMateria,
   updateNotasExamen,
   editarMateria,
-  editarExamen
+  editarExamen,
+  getAnaliticoUsuario,
+  getAlumnosMateriaInscripcion,
+  getAlumnosExamenInscripcion,
+  setInscribirAlumnoExamen,
+  setInscribirAlumnoMateria,
+  deleteInscripcionMateriaAdmin,
+  deleteInscripcionExamenAdmin
 };

@@ -4,35 +4,37 @@ import "../../Css/InformacionPersonal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { apiUrlEstudiante as apiUrl } from "../../api/api";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setModal, modalFunction } from "../../actions/ModalActions";
+import { ModalFunctions } from "../../actions/types";
+import { setAnaliticoUsuario } from "../../actions/InformacionPersonal";
+import { apiCalls } from "../../api/apiCalls";
+import { useSnackbar } from "notistack";
 
 export default function InformeAnalitico() {
   const idUsuario = useSelector((state) => state.informacionPersonal.idUsuario);
+  const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
-  const planillaMaterias = () => {
-    window.open(
-      apiUrl +
-        "/modulo-estudiante/usuarios/analitico-pdf?idUsuario=" +
-        idUsuario,
-      "_blank"
-    );
+  const analitico = () => {
+    apiCalls
+      .getAnaliticoUsuario(idUsuario)
+      .then((response) => {
+        dispatch(setAnaliticoUsuario(response.data.data));
+        dispatch(setModal(true));
+        dispatch(modalFunction(ModalFunctions.analiticoAlumno));
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.errors.details[0].messages[0], {
+          variant: "error",
+        });
+      });
   };
-
   return (
     <Grid container className="ColumInformacionPersonal">
-      <Grid item md={12}>
-        <h4>Informe Analítico</h4>
-      </Grid>
-
-      <Grid item md={12}>
-        <Button variant="contained" color="primary" onClick={planillaMaterias}>
-          Descargar
-          <FontAwesomeIcon
-            className="IconMateriaOn"
-            icon={faDownload}
-            title="Recordatorios Examenes Finales"
-            style={{ color: "white" }}
-          />
+      <Grid item md={12} style={{ marginTop: "20px" }}>
+        <Button variant="contained" color="primary" onClick={analitico}>
+          Ver Informe Analítico
         </Button>
       </Grid>
     </Grid>

@@ -90,6 +90,19 @@ export default function MenuItems() {
           <label className="LabelIcon">Cargar Notas</label>
         </div>
       )}
+      {rolUsuario === 1 && (
+        <div
+          className={
+            menuSelected === MenuOptions.Inscripciones
+              ? "MenuItems-Selected MenuItems"
+              : "MenuItems"
+          }
+          onClick={() => switchMenu(MenuOptions.Inscripciones)}
+        >
+          <FontAwesomeIcon className="Icon" icon={faMarker} />
+          <label className="LabelIcon">Inscripciones</label>
+        </div>
+      )}
       <div className="MenuItems" onClick={cerrarSesion}>
         <FontAwesomeIcon className="Icon" icon={faSignOutAlt} />
         <label className="LabelIcon">Cerrar Sesión</label>

@@ -19,7 +19,10 @@ export const actions = {
   setAlumnosNotasExamen:"setAlumnosNotasExamen",
   setLogged:"SetLogged",
   setUserLogged:"setUserLogged",
-  seleccionarExamen:"Seleccionar Examen"
+  seleccionarExamen:"Seleccionar Examen",
+  analiticoUsuario:"Analitico Usuario",
+  inscripcionesMateria:"Inscripciones Materia",
+  inscripcionesExamen:"Inscripciones Examen"
 
 };
 export const MenuOptions = {
@@ -29,12 +32,14 @@ export const MenuOptions = {
   InformacionPersonal: "Información Personal",
   AdministrarUsuarios: "Administar Usuarios",
   CargarNotas: "Cargar Notas",
+  Inscripciones:"Inscripciones"
 
 };
 export const ModalFunctions = {
   nuevaMateria :"Nueva Materia",
   horariosMateria : "Horarios Materia",
-  alumnosMateria:"Alumnos Materia"
+  alumnosMateria:"Alumnos Materia",
+  analiticoAlumno:"Analitico Alumno"
 
 };
 
